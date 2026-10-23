@@ -1,0 +1,22 @@
+data moons : { x : Vec 2, y : Real } =
+  csv "data/moons.csv" { x = [x1, x2], y = label }
+
+param W1 : Mat 16 2  ~ uniform(-1, 1)
+param b1 : Vec 16    = 0
+param W2 : Mat 16 16 ~ uniform(-1, 1)
+param b2 : Vec 16    = 0
+param W3 : Mat 1 16  ~ uniform(-1, 1)
+param b3 : Vec 1     = 0
+
+fn layer(W : Mat m n, b : Vec m, x : Vec n) : Vec m = W @ x + b
+
+model mlp(x : Vec 2) : Real =
+  let h1 = relu(layer(W1, b1, x))  in
+  let h2 = relu(layer(W2, b2, h1)) in
+  layer(W3, b3, h2)[0]
+
+-- SVM max-margin loss + L2 regularisation
+loss =
+  let data_loss = mean [ relu(1 - y * mlp(x)) | (x, y) <- moons ] in
+  let reg       = 1e-4 * sum [ sum(p ^ 2) | p <- params ] in
+  data_loss + reg

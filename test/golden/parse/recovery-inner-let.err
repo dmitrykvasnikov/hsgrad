@@ -1,0 +1,13 @@
+error[E0101]: unexpected `)`
+ --> recovery-inner-let.hsg:4:26
+  |
+4 |   let h1 = relu(W1 @ x + ) in
+  |                          ^ expected an expression
+
+error[E0101]: unexpected end of file
+ --> recovery-inner-let.hsg:8:19
+  |
+8 | let y = mlp([1, 2]
+  |                   ^ expected `)`, `,` or an operator
+
+2 errors

@@ -1,0 +1,13 @@
+error[E0101]: expected a natural number, found `2.5`
+ --> not-natural.hsg:1:15
+  |
+1 | input v : Vec 2.5
+  |               ^^^ a dimension must be a whole number, like `0` or `16`
+
+error[E0101]: expected a natural number, found `1.5`
+ --> not-natural.hsg:2:11
+  |
+2 | let a = v[1.5]
+  |           ^^^ an index must be a whole number, like `0` or `16`
+
+2 errors

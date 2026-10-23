@@ -1,0 +1,7 @@
+error[E0101]: unexpected end of file
+ --> unexpected-eof.hsg:2:12
+  |
+2 | let y = a *
+  |            ^ expected an expression
+
+1 error

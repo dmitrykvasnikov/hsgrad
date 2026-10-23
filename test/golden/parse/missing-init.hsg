@@ -1,0 +1,2 @@
+param w : Vec 3
+param b : Real = 0

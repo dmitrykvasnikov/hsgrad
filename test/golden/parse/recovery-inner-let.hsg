@@ -1,0 +1,8 @@
+-- An error inside an indented `let ... in` does not resynchronise at the
+-- inner `let`s, only at the next declaration.
+model mlp(x : Vec 2) : Real =
+  let h1 = relu(W1 @ x + ) in
+  let h2 = relu(W2 @ h1 + b2) in
+  h2[0]
+
+let y = mlp([1, 2]

@@ -1,0 +1,3 @@
+input x : Real = 1
+let y = x + {- the rest is commented out
+  2 * x

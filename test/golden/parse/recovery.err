@@ -1,0 +1,35 @@
+error[E0101]: unexpected keyword `param`
+ --> recovery.hsg:3:1
+  |
+3 | param w : Vec 2 ~ uniform(-1, 1)
+  | ^^^^^ expected `,` or `]`
+
+error[E0101]: parameter `b` has no initial value
+ --> recovery.hsg:4:15
+  |
+4 | param b : Real
+  |               ^ expected `=` or `~` here
+  |
+  = hint: write `= 0` for a constant, or `~ uniform(-1, 1)` for random values
+
+error[E0104]: `let` expression without `in`
+ --> recovery.hsg:7:24
+  |
+7 |   let s = dot(w, x) + b
+  |   ---                  ^ expected `in` here
+  |   |
+  |   this `let` is inside an expression
+  |
+  = hint: inside an expression write `let s = … in body`;
+          only a top-level `let` needs no `in`
+
+error[E0101]: unexpected `x` after `b`
+  --> recovery.hsg:10:41
+   |
+10 | model m(x : Vec 2) : Real = neuron(w, b x)
+   |                                         ^ a call needs parentheses
+   |
+   = hint: to call `b`, write `b(x)`
+   = hint: to multiply, write `b * x`
+
+4 errors

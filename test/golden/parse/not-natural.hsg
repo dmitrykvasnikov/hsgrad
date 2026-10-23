@@ -1,0 +1,2 @@
+input v : Vec 2.5
+let a = v[1.5]

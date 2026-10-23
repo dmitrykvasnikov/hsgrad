@@ -1,0 +1,12 @@
+-- Several independent syntax errors: each declaration is parsed on its own.
+input x : Vec 2 = [1.0, 2.0
+param w : Vec 2 ~ uniform(-1, 1)
+param b : Real
+
+fn neuron(w : Vec n, b : Real, x : Vec n) : Real =
+  let s = dot(w, x) + b
+  tanh(s)
+
+model m(x : Vec 2) : Real = neuron(w, b x)
+
+loss = (m(x) - 1) ^ 2

@@ -39,16 +39,20 @@ library
     , HsGrad.Core.Simplify
     , HsGrad.Core.Symbolic
     , HsGrad.Lang.Diagnostic
+    , HsGrad.Lang.Parser
     , HsGrad.Lang.Span
+    , HsGrad.Lang.Syntax
     , HsGrad.Train.Loop
     , HsGrad.Train.Optim
     , HsGrad.Train.Param
     , HsGrad.Viz.Dot
   build-depends:
-    , containers  ^>=0.7
-    , mtl         ^>=2.3
-    , random      ^>=1.3
-    , text        ^>=2.1
+    , containers         ^>=0.7
+    , megaparsec         ^>=9.8
+    , mtl                ^>=2.3
+    , parser-combinators ^>=1.3
+    , random             ^>=1.3
+    , text               ^>=2.1
   other-modules:    Paths_hsgrad
   autogen-modules:  Paths_hsgrad
 
@@ -73,10 +77,13 @@ test-suite spec
     , HsGrad.Core.SimplifySpec
     , HsGrad.Core.SymbolicSpec
     , HsGrad.Lang.DiagnosticSpec
+    , HsGrad.Lang.ParserSpec
     , HsGrad.Lang.SpanSpec
+    , HsGrad.Lang.SyntaxSpec
     , HsGrad.Test.Examples
     , HsGrad.Test.Golden
     , HsGrad.Test.Graphs
+    , HsGrad.Test.Syntax
     , HsGrad.Train.LoopSpec
     , HsGrad.Train.OptimSpec
     , HsGrad.Train.ParamSpec

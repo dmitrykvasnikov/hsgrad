@@ -1,0 +1,4 @@
+input v : Vec 3
+input i : Real = 0
+let a = v[i]
+let b = sum [v, v]

@@ -1,0 +1,10 @@
+error[E0101]: unexpected `x` after `tanh`
+ --> call-without-parens.hsg:2:14
+  |
+2 | let y = tanh x
+  |              ^ a call needs parentheses
+  |
+  = hint: to call `tanh`, write `tanh(x)`
+  = hint: to multiply, write `tanh * x`
+
+1 error

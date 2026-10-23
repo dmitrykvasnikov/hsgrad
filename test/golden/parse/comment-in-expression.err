@@ -1,0 +1,12 @@
+error[E0102]: unterminated block comment
+ --> comment-in-expression.hsg:2:13
+  |
+2 | let y = x + {- the rest is commented out
+  |             ^^ this comment is never closed
+3 |   2 * x
+4 |
+  | - the file ends here
+  |
+  = hint: close it with `-}`
+
+1 error

@@ -1,0 +1,11 @@
+error[E0102]: unterminated string
+ --> unterminated-string.hsg:2:7
+  |
+2 |   csv "data/moons.csv { x = [x1, x2], y = label }
+  |       ^                                          - the line ends here
+  |       |
+  |       this string is never closed
+  |
+  = hint: close it with `"`; a string can't continue on the next line
+
+1 error

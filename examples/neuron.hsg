@@ -1,0 +1,8 @@
+input x : Vec 3 = [1.0, -2.0, 0.5]
+param w : Vec 3 ~ uniform(-1, 1)
+param b : Real  = 0
+
+fn neuron(w : Vec n, b : Real, x : Vec n) : Real =
+  tanh(dot(w, x) + b)
+
+let y = neuron(w, b, x)

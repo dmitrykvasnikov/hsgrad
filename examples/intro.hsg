@@ -1,0 +1,8 @@
+-- Scalar expression; used to explore derivatives.
+input a : Real = 2.0
+input b : Real = -3.0
+input c : Real = 10.0
+
+let e = a * b
+let d = e + c
+let L = d * -2.0

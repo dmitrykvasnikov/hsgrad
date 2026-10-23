@@ -1,0 +1,45 @@
+error[E0103]: malformed number literal `1.`
+ --> bad-numbers.hsg:2:18
+  |
+2 | input a : Real = 1.
+  |                  ^^ digits must follow the decimal point
+  |
+  = hint: write `1.0` or `1`
+
+error[E0103]: malformed number literal `.5`
+ --> bad-numbers.hsg:3:18
+  |
+3 | input b : Real = .5
+  |                  ^^ a number can't start with `.`
+  |
+  = hint: write `0.5`
+
+error[E0103]: malformed number literal `1e`
+ --> bad-numbers.hsg:4:18
+  |
+4 | input c : Real = 1e
+  |                  ^^ the exponent has no digits
+  |
+  = hint: an exponent looks like `1e-4` or `3.0E2`
+
+error[E0103]: malformed number literal `2x`
+ --> bad-numbers.hsg:5:9
+  |
+5 | let d = 2x
+  |         ^^ `x` can't follow a number
+  |
+  = hint: to multiply, write `2 * x`
+
+error[E0103]: malformed number literal `1.2.3`
+ --> bad-numbers.hsg:6:9
+  |
+6 | let e = 1.2.3
+  |         ^^^^^ a number has at most one decimal point
+
+error[E0103]: number `1e999` is too large
+ --> bad-numbers.hsg:7:9
+  |
+7 | let f = 1e999
+  |         ^^^^^ the largest number is about 1.8e308
+
+6 errors

@@ -1,0 +1,9 @@
+error[E0101]: parameter `w` has no initial value
+ --> missing-init.hsg:1:16
+  |
+1 | param w : Vec 3
+  |                ^ expected `=` or `~` here
+  |
+  = hint: write `= 0` for a constant, or `~ uniform(-1, 1)` for random values
+
+1 error

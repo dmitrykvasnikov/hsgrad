@@ -1,0 +1,9 @@
+error[E0101]: unexpected keyword `in`
+ --> top-level-in.hsg:2:15
+  |
+2 | let y = x * 2 in y
+  |               ^^ expected an operator or a declaration
+  |
+  = hint: a top-level `let` has no `in`
+
+1 error

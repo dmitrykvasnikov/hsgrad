@@ -1,0 +1,19 @@
+error[E0105]: exponent must be a numeric constant
+ --> variable-exponent.hsg:3:13
+  |
+3 | let z = x ^ y
+  |             ^ this exponent is not a number
+  |
+  = hint: `^` takes a number: `x ^ 2`, `x ^ -1`, `x ^ 0.5`
+  = hint: for a variable exponent write `exp(y * log(x))` (needs a positive base)
+
+error[E0105]: exponent must be a numeric constant
+ --> variable-exponent.hsg:4:19
+  |
+4 | let w = (x + 1) ^ (y - 1)
+  |                   ^^^^^^^ this exponent is not a number
+  |
+  = hint: `^` takes a number: `x ^ 2`, `x ^ -1`, `x ^ 0.5`
+  = hint: for a variable exponent write `exp((y - 1) * log(x + 1))` (needs a positive base)
+
+2 errors

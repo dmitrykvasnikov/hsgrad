@@ -1,0 +1,9 @@
+error[E0101]: unexpected keyword `in`
+ --> keyword-as-name.hsg:2:5
+  |
+2 | let in = x * 2
+  |     ^^ expected a name
+  |
+  = hint: `in` is a keyword, so it can't be a name
+
+1 error

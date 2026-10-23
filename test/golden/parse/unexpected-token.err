@@ -1,0 +1,7 @@
+error[E0101]: unexpected number `3.0`
+ --> unexpected-token.hsg:2:29
+  |
+2 | input x : Vec 3 = [1.0, 2.0 3.0]
+  |                             ^^^ expected `,` or `]`
+
+1 error

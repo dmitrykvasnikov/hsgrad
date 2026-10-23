@@ -1,0 +1,7 @@
+error[E0101]: unexpected character `#`
+ --> unknown-character.hsg:2:11
+  |
+2 | let y = x # 2
+  |           ^ expected an operator or a declaration
+
+1 error

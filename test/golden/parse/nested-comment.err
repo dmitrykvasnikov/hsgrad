@@ -1,0 +1,13 @@
+error[E0102]: unterminated block comment
+ --> nested-comment.hsg:1:1
+  |
+1 | {- An outer comment
+  | ^^ this comment is never closed
+...
+5 |
+  | - the file ends here
+  |
+  = note: comments nest: each `{-` inside this comment needs its own `-}`
+  = hint: close it with `-}`
+
+1 error

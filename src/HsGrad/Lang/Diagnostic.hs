@@ -190,7 +190,7 @@ data Label = Label
   { labelSpan :: !Span
   , labelText :: !Text
   }
-  deriving (Eq, Show)
+  deriving (Eq, Ord, Show)
 
 -- | One error or warning.
 --
@@ -207,7 +207,7 @@ data Diagnostic = Diagnostic
   , diagNotes :: ![Text]
   , diagHints :: ![Text]
   }
-  deriving (Eq, Show)
+  deriving (Eq, Ord, Show)
 
 -- | A diagnostic with a code, a message, and the primary span and its
 -- label; no secondary labels, notes or hints yet. Add those with

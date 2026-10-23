@@ -1,0 +1,4 @@
+input x : Real = 2.0
+input y : Real = 3.0
+let z = x ^ y
+let w = (x + 1) ^ (y - 1)

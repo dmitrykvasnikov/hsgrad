@@ -1,0 +1,2 @@
+input a : Real = 2.0
+let y = a *

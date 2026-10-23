@@ -1,0 +1,18 @@
+error[E0101]: `[` after `v` starts neither an index nor a comprehension
+ --> variable-index.hsg:3:11
+  |
+3 | let a = v[i]
+  |           ^ an index must be a natural number
+  |
+  = hint: indices are number literals, like `v[0]`; they can't be computed
+  = hint: a call with a vector argument needs parentheses: `v([…])`
+
+error[E0101]: `[` after `sum` starts neither an index nor a comprehension
+ --> variable-index.hsg:4:14
+  |
+4 | let b = sum [v, v]
+  |              ^ a comprehension needs `|` here
+  |
+  = hint: a call with a vector argument needs parentheses: `sum([…])`
+
+2 errors

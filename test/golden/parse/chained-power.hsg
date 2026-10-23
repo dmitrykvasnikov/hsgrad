@@ -1,0 +1,2 @@
+input x : Real = 2.0
+let y = x ^ 2 ^ 3

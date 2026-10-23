@@ -1,0 +1,2 @@
+-- A missing comma in a vector literal.
+input x : Vec 3 = [1.0, 2.0 3.0]

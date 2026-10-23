@@ -109,12 +109,12 @@ hsgrad train moons.hsg --steps 100 --lr 1.0 --lr-schedule linear:0.1 --seed 1337
 |---|---|
 | Line comment | `-- …` to end of line |
 | Block comment | `{- … -}`, nestable |
-| Identifier | `[a-zA-Z_][a-zA-Z0-9_']*`, not a keyword |
+| Identifier | `[a-zA-Z_][a-zA-Z0-9_']*`, not a keyword or type name |
 | Natural | `0`, `16` (used for dimensions and indices) |
-| Number | `2`, `2.5`, `1e-4`, `3.0E2`. No leading `.` and no sign: `-` is an operator |
-| String | `"…"` with escapes `\"` and `\\`. Only used for CSV paths |
+| Number | `digits ( "." digits )? ( ("e" \| "E") ("+" \| "-")? digits )?`: `2`, `2.5`, `1e-4`, `3.0E2`. No leading `.` and no sign: `-` is an operator |
+| String | `"…"` on one line, with escapes `\"` and `\\`. Only used for CSV paths |
 | Keywords | `input param data fn let in model loss rows csv params` |
-| Type names | `Real Vec Mat` |
+| Type names | `Real Vec Mat` (reserved like keywords) |
 | Operators | `+ - * / ^ @ = : ~ <- \|` |
 | Punctuation | `( ) [ ] { } ,` |
 
@@ -294,7 +294,8 @@ W0201.
 - The type is `Seq t`, where `t` is the type of `body`. Every iteration must
   give the same `t` (E0310). For `params` the body is checked once per
   parameter, with that parameter's shape.
-- A `Seq` can only be the argument of `sum` or `mean` (E0311).
+- A `Seq` can only be the argument of `sum` or `mean` (E0311). Such a call
+  may drop its parentheses: `mean [ … ]` is `mean([ … ])`.
 - There is one generator per comprehension, and comprehensions don't nest
   over datasets.
 
@@ -364,7 +365,7 @@ created it (D4).
 program      ::= decl*
 
 decl         ::= "input" ident ":" type ( "=" literal )?
-               | "param" ident ":" type ( "=" literal | "~" ident "(" number "," number ")" )
+               | "param" ident ":" type ( "=" literal | "~" ident "(" signed "," signed ")" )
                | "data"  ident ":" schema "=" source
                | "fn"    ident "(" binders? ")" ( ":" type )? "=" expr
                | "model" ident "(" binders? ")" ":" type "=" expr
@@ -388,19 +389,29 @@ additive     ::= multiplicative ( ( "+" | "-" ) multiplicative )*
 multiplicative ::= matmul ( ( "*" | "/" ) matmul )*
 matmul       ::= unary ( "@" unary )*
 unary        ::= "-" unary | power
-power        ::= postfix ( "^" "-"? number )?
+power        ::= postfix ( "^" signed )?
 postfix      ::= atom ( "[" natural ( "," natural )? "]" )*
 atom         ::= number
-               | ident ( "(" ( expr ( "," expr )* )? ")" )?
+               | ident ( "(" ( expr ( "," expr )* )? ")" | comprehension )?
                | "(" expr ")"
                | "[" expr ( "," expr )* "]"
-               | "[" expr "|" pattern "<-" ( ident | "params" ) "]"
+               | comprehension
+comprehension ::= "[" expr "|" pattern "<-" ( ident | "params" ) "]"
 pattern      ::= ident | "(" ident ( "," ident )* ")"
 
-literal      ::= "-"? number | "[" literal ( "," literal )* "]"
+literal      ::= signed | "[" literal ( "," literal )* "]"
+signed       ::= "-"? number
 ```
 
-Function application always uses parentheses (`f(x)`, never `f x`). Together
+`ident comprehension` is a call with the comprehension as its only
+argument: `mean [ e | x <- d ]` means `mean([ e | x <- d ])`. A `[` right
+after a name is therefore either an index or such a comprehension; it is an
+index when a number follows it and then `]` or `,` (`v[0]`, `M[1, 2]`), and
+a comprehension otherwise (`sum [ 0 | p <- params ]`).
+
+Function application always uses parentheses (`f(x)`, never `f x`); the
+one exception is a call with a single comprehension argument, which reads
+better without them (`sum [ … ]`, as in the examples of §1). Together
 with keyword-led declarations, this makes the grammar unambiguous without
 layout rules or separators, which also helps produce good parse errors.
 

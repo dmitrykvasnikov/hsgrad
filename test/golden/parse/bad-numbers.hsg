@@ -1,0 +1,7 @@
+-- Each number is malformed; all are reported.
+input a : Real = 1.
+input b : Real = .5
+input c : Real = 1e
+let d = 2x
+let e = 1.2.3
+let f = 1e999

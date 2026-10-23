@@ -1,0 +1,2 @@
+input x : Real = 1
+let y = x * 2 in y

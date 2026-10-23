@@ -1,0 +1,9 @@
+error[E0101]: unexpected `^` after a power
+ --> chained-power.hsg:2:15
+  |
+2 | let y = x ^ 2 ^ 3
+  |               ^ a power of a power needs parentheses
+  |
+  = hint: `^` is not associative: write `(x ^ 2) ^ 3`
+
+1 error

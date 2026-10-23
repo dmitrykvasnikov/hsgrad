@@ -1,0 +1,16 @@
+data xor : { x : Vec 2, y : Real } = rows [
+  ([0, 0], -1),
+  ([0, 1],  1),
+  ([1, 0],  1),
+  ([1, 1], -1)
+]
+
+param W1 : Mat 4 2 ~ uniform(-1, 1)
+param b1 : Vec 4   = 0
+param w2 : Vec 4   ~ uniform(-1, 1)
+param b2 : Real    = 0
+
+model net(x : Vec 2) : Real =
+  dot(w2, tanh(W1 @ x + b1)) + b2
+
+loss = mean [ (net(x) - y) ^ 2 | (x, y) <- xor ]
