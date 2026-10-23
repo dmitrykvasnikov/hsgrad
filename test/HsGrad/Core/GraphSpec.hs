@@ -14,25 +14,19 @@ module HsGrad.Core.GraphSpec
   ( spec
   ) where
 
-import Control.Monad (foldM, replicateM_)
+import Control.Monad (replicateM_)
 import Data.Set qualified as Set
 import HsGrad.Core.Graph
 import HsGrad.Core.Op
+import HsGrad.Test.Graphs (Recipe (..), built, builtRecipe, runRecipe)
 import Test.Hspec (Expectation, Spec, describe, expectationFailure, it, shouldBe)
 import Test.Hspec.QuickCheck (prop)
 import Test.QuickCheck
-  ( Arbitrary (..)
-  , Gen
-  , choose
+  ( choose
   , conjoin
   , counterexample
-  , elements
   , forAll
-  , frequency
   , listOf
-  , shrinkList
-  , sized
-  , vectorOf
   , (.&&.)
   , (===)
   )
@@ -47,12 +41,6 @@ spec = do
 
 -- ---------------------------------------------------------------------------
 -- Helpers
-
--- | Run a builder that is expected to succeed.
-built :: Builder a -> (a, Graph)
-built b = case build b of
-  Right r -> r
-  Left err -> error ("unexpected build error: " <> show err)
 
 -- | Check that a builder fails, and pass the error to a check.
 failsWith :: Builder a -> (GraphError -> Expectation) -> Expectation
@@ -368,59 +356,8 @@ reachableSpec = do
 
 -- ---------------------------------------------------------------------------
 -- Random graphs
-
--- | A recipe for a random graph: a list of steps, each creating (or
--- finding) one node. Arguments are indices into the ids produced by the
--- steps before, taken modulo their number, so every list of steps is a
--- valid recipe, and so is every sublist (which keeps shrinking simple).
-newtype Recipe = Recipe [Step]
-  deriving (Show)
-
-data Step
-  = SLeaf Leaf
-  | SUn UnOp Int
-  | SBin BinOp Int Int
-  deriving (Show)
-
-instance Arbitrary Recipe where
-  arbitrary = sized $ \n -> do
-    len <- choose (1, max 1 (2 * n))
-    Recipe <$> vectorOf len genStep
-  shrink (Recipe steps) = map Recipe (shrinkList (const []) steps)
-
--- | Few distinct leaves and ops, so that random graphs contain many
--- structurally identical nodes for hash-consing to merge.
-genStep :: Gen Step
-genStep =
-  frequency
-    [ (2, SLeaf <$> elements leaves)
-    , (3, SUn <$> elements unOps <*> genIndex)
-    , (5, SBin <$> elements [minBound .. maxBound] <*> genIndex <*> genIndex)
-    ]
-  where
-    leaves = [Input "x", Input "y", Param "w", Const 0, Const 1, Const (-2.5)]
-    unOps = [Neg, Exp, Tanh, Relu, PowC 2, PowC (1 / 2)]
-    genIndex = choose (0, 1000)
-
--- | Run a recipe. Returns the id produced by every step, in step order.
-runRecipe :: [Step] -> Builder [NodeId]
-runRecipe = fmap reverse . foldM step []
-  where
-    -- @done@ holds the ids produced so far, most recent first. A step that
-    -- needs an argument when there is none yet becomes a leaf.
-    step done s = (: done) <$> case s of
-      SLeaf l -> node (Leaf l) []
-      SUn op i
-        | null done -> input "x"
-        | otherwise -> unary op (pick done i)
-      SBin op i j
-        | null done -> input "y"
-        | otherwise -> binary op (pick done i) (pick done j)
-    pick done i = done !! (i `mod` length done)
-
--- | Build a recipe; random recipes never fail.
-builtRecipe :: [Step] -> ([NodeId], Graph)
-builtRecipe = built . runRecipe
+--
+-- Random graphs come from 'Recipe's, see "HsGrad.Test.Graphs".
 
 -- | The reference definition of reachability: start from the outputs and
 -- keep adding the arguments of everything in the set until nothing
