@@ -1,0 +1,9 @@
+error[E0405]: `--batch 10` is larger than dataset `xor`
+ --> test/golden/data/batch.hsg:3:6
+  |
+3 | data xor : { x : Vec 2, y : Real } = rows [
+  |      ^^^ `xor` has 4 rows
+  |
+  = hint: use `--batch 4` or less, or leave `--batch` out to use every row in every step
+
+1 error

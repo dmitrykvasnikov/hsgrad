@@ -1,0 +1,48 @@
+error[E0404]: row has 3 values, but dataset `points` has 2 fields
+ --> test/golden/data/rows.hsg:4:3
+  |
+2 | data points : { x : Vec 2, y : Real } = rows [
+  |      ------ schema `{ x : Vec 2, y : Real }`
+3 |   ([0, 0], -1),
+4 |   (0, 1, 1),
+  |   ^^^^^^^^^ 3 values
+  |
+  = hint: vector fields are written in brackets: `([0, 1], 1)`
+
+error[E0404]: field `x` is a `Vec 2`, but this value is a `Vec 3`
+ --> test/golden/data/rows.hsg:5:4
+  |
+2 | data points : { x : Vec 2, y : Real } = rows [
+  |      ------ schema `{ x : Vec 2, y : Real }`
+...
+5 |   ([1, 0, 1], 1),
+  |    ^^^^^^^^^ a `Vec 3`
+
+error[E0404]: field `y` is a `Real`, but this value is a `Vec 1`
+ --> test/golden/data/rows.hsg:6:12
+  |
+2 | data points : { x : Vec 2, y : Real } = rows [
+  |      ------ schema `{ x : Vec 2, y : Real }`
+...
+6 |   ([1, 1], [-1]),
+  |            ^^^^ a `Vec 1`
+
+error[E0404]: field `x` is a `Vec 2`, but this value is a nested vector
+ --> test/golden/data/rows.hsg:7:4
+  |
+2 | data points : { x : Vec 2, y : Real } = rows [
+  |      ------ schema `{ x : Vec 2, y : Real }`
+...
+7 |   ([[1], [1]], 1),
+  |    ^^^^^^^^^^ a nested vector
+
+error[E0404]: row has 1 value, but dataset `points` has 2 fields
+ --> test/golden/data/rows.hsg:8:3
+  |
+2 | data points : { x : Vec 2, y : Real } = rows [
+  |      ------ schema `{ x : Vec 2, y : Real }`
+...
+8 |   ([1, 1])
+  |   ^^^^^^^^ 1 value
+
+5 errors

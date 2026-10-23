@@ -1,0 +1,38 @@
+error[E0403]: text after a quoted cell in `test/golden/data/malformed.csv`
+ --> test/golden/data/malformed.csv:2:6
+  |
+2 | "0.5"x, 1.5, 1
+  |      ^ expected `,` or the end of the line
+  |
+ ::: test/golden/data/malformed.hsg:3:7
+  |
+3 |   csv "malformed.csv" { x = [x1, x2], y = label }
+  |       --------------- dataset `points` reads this file
+
+error[E0403]: blank line in `test/golden/data/malformed.csv`
+ --> test/golden/data/malformed.csv:3:1
+  |
+3 |
+  | ^ blank line
+  |
+ ::: test/golden/data/malformed.hsg:3:7
+  |
+3 |   csv "malformed.csv" { x = [x1, x2], y = label }
+  |       --------------- dataset `points` reads this file
+  |
+  = hint: remove it: blank lines are only allowed at the end of the file
+
+error[E0403]: unterminated quoted cell in `test/golden/data/malformed.csv`
+ --> test/golden/data/malformed.csv:4:6
+  |
+4 | 0.5, "1.5, 1
+  |      ^^^^^^^ this quote is not closed
+  |
+ ::: test/golden/data/malformed.hsg:3:7
+  |
+3 |   csv "malformed.csv" { x = [x1, x2], y = label }
+  |       --------------- dataset `points` reads this file
+  |
+  = note: a quoted cell ends on its line; a quote inside it is written `""`
+
+3 errors

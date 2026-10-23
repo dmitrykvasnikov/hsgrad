@@ -1,0 +1,12 @@
+error[E0402]: column `x` appears 2 times in the header of `test/golden/data/duplicate-column.csv`
+ --> test/golden/data/duplicate-column.hsg:3:37
+  |
+3 |   csv "duplicate-column.csv" { p = [x, y], q = label }
+  |                                     ^ ambiguous
+  |
+ ::: test/golden/data/duplicate-column.csv:1:1
+  |
+1 | x,y,x,label
+  | -   -
+
+1 error

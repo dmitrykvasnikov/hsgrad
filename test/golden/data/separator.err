@@ -1,0 +1,14 @@
+error[E0402]: no column `label` in `test/golden/data/separator.csv`
+ --> test/golden/data/separator.hsg:2:56
+  |
+2 | data points : { y : Real } = csv "separator.csv" { y = label }
+  |                                                        ^^^^^ not in the header
+  |
+ ::: test/golden/data/separator.csv:1:1
+  |
+1 | x1;x2;label
+  | ----------- the header
+  |
+  = hint: the header is a single column `x1;x2;label`: the file seems to be separated by `;`, but hsgrad reads comma-separated files
+
+1 error

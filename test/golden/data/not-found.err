@@ -1,0 +1,9 @@
+error[E0401]: cannot read `test/golden/data/data/points.csv`
+ --> test/golden/data/not-found.hsg:4:7
+  |
+4 |   csv "data/points.csv" { x = [x1, x2], y = label }
+  |       ^^^^^^^^^^^^^^^^^ file not found
+  |
+  = note: a path in `csv` is relative to the directory of the `.hsg` file: here `test/golden/data/data/points.csv`
+
+1 error

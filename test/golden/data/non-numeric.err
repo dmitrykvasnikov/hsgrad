@@ -1,0 +1,27 @@
+error[E0403]: cell `abc` of column `x2` is not a number
+ --> test/golden/data/non-numeric.csv:3:5
+  |
+3 | 0.5,abc,-1,a typo
+  |     ^^^ not a number
+  |
+ ::: test/golden/data/non-numeric.hsg:4:36
+  |
+4 |   csv "non-numeric.csv" { x = [x1, x2], y = label }
+  |                                    -- read for field `x`
+  |
+  = note: column `x2` has 2 more bad cells, on lines 5 and 6
+
+error[E0403]: empty cell in column `x1`
+ --> test/golden/data/non-numeric.csv:4:1
+  |
+4 | ,2.5,1,x1 is missing
+  | ^ empty
+  |
+ ::: test/golden/data/non-numeric.hsg:4:32
+  |
+4 |   csv "non-numeric.csv" { x = [x1, x2], y = label }
+  |                                -- read for field `x`
+  |
+  = note: column `x1` has 1 more bad cell, on line 7
+
+2 errors

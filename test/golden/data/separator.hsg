@@ -1,0 +1,2 @@
+-- E0402: the file is separated by semicolons.
+data points : { y : Real } = csv "separator.csv" { y = label }

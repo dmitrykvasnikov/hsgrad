@@ -1,0 +1,4 @@
+-- E0401: the path is relative to this file's directory, and there is no
+-- data/ directory here.
+data points : { x : Vec 2, y : Real } =
+  csv "data/points.csv" { x = [x1, x2], y = label }

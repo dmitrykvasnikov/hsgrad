@@ -38,6 +38,8 @@ library
     , HsGrad.Core.Pretty
     , HsGrad.Core.Simplify
     , HsGrad.Core.Symbolic
+    , HsGrad.Data.Csv
+    , HsGrad.Data.Dataset
     , HsGrad.Lang.Check
     , HsGrad.Lang.Diagnostic
     , HsGrad.Lang.Parser
@@ -50,6 +52,7 @@ library
     , HsGrad.Viz.Dot
   build-depends:
     , containers         ^>=0.7
+    , filepath           ^>=1.5
     , megaparsec         ^>=9.8
     , mtl                ^>=2.3
     , parser-combinators ^>=1.3
@@ -78,6 +81,8 @@ test-suite spec
     , HsGrad.Core.PrettySpec
     , HsGrad.Core.SimplifySpec
     , HsGrad.Core.SymbolicSpec
+    , HsGrad.Data.CsvSpec
+    , HsGrad.Data.DatasetSpec
     , HsGrad.Lang.CheckSpec
     , HsGrad.Lang.DiagnosticSpec
     , HsGrad.Lang.ParserSpec

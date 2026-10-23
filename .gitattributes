@@ -1,0 +1,3 @@
+# A golden CSV file with \r\n line ends and a byte-order mark on purpose:
+# keep its bytes exactly as they are (core.autocrlf would convert them).
+test/golden/data/loads.csv -text

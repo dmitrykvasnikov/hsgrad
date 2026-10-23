@@ -1,0 +1,9 @@
+-- E0404: inline rows that don't match the schema.
+data points : { x : Vec 2, y : Real } = rows [
+  ([0, 0], -1),
+  (0, 1, 1),
+  ([1, 0, 1], 1),
+  ([1, 1], [-1]),
+  ([[1], [1]], 1),
+  ([1, 1])
+]

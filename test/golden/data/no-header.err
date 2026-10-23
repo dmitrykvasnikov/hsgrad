@@ -1,0 +1,9 @@
+error[E0405]: dataset `points` is empty
+ --> test/golden/data/no-header.hsg:3:7
+  |
+3 |   csv "no-header.csv" { x = [x1, x2], y = label }
+  |       ^^^^^^^^^^^^^^^ `test/golden/data/no-header.csv` is empty
+  |
+  = note: a CSV file starts with a header line naming its columns, such as `x1,x2,label`
+
+1 error

@@ -1,0 +1,6 @@
+-- No error: quoted header names, spaces, \r\n line ends, a byte-order
+-- mark, an unmapped column, blank lines at the end; columns mapped in
+-- another order than the header's.
+-- golden: --batch 3
+data points : { x : Vec 2, y : Real } =
+  csv "loads.csv" { y = label, x = [x1, x2] }

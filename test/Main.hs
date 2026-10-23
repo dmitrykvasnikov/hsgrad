@@ -13,6 +13,8 @@ import HsGrad.Core.OpSpec qualified
 import HsGrad.Core.PrettySpec qualified
 import HsGrad.Core.SimplifySpec qualified
 import HsGrad.Core.SymbolicSpec qualified
+import HsGrad.Data.CsvSpec qualified
+import HsGrad.Data.DatasetSpec qualified
 import HsGrad.Lang.CheckSpec qualified
 import HsGrad.Lang.DiagnosticSpec qualified
 import HsGrad.Lang.ParserSpec qualified
@@ -46,3 +48,5 @@ main = hspec $ do
   describe "HsGrad.Lang.Parser" HsGrad.Lang.ParserSpec.spec
   describe "HsGrad.Lang.Shape" HsGrad.Lang.ShapeSpec.spec
   describe "HsGrad.Lang.Check" HsGrad.Lang.CheckSpec.spec
+  describe "HsGrad.Data.Csv" HsGrad.Data.CsvSpec.spec
+  describe "HsGrad.Data.Dataset" HsGrad.Data.DatasetSpec.spec

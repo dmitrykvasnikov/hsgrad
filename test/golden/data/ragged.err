@@ -1,0 +1,17 @@
+error[E0403]: row has 2 cells, but the header has 3 columns
+ --> test/golden/data/ragged.csv:3:9
+  |
+1 | x1,x2,label
+  | ----------- the header
+2 | 0.5,1.5,1
+3 | 0.5, 1.5
+  |         ^ 1 cell missing
+  |
+ ::: test/golden/data/ragged.hsg:3:7
+  |
+3 |   csv "ragged.csv" { x = [x1, x2], y = label }
+  |       ------------ dataset `points` reads this file
+  |
+  = note: the same problem on lines 4 and 5
+
+1 error

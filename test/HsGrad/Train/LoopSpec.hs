@@ -15,15 +15,15 @@ module HsGrad.Train.LoopSpec
   ( spec
   ) where
 
-import Control.Monad (foldM, forM, replicateM, zipWithM)
+import Control.Monad (replicateM)
 import Control.Monad.State.Strict (evalState, runState)
 import Data.List (nub)
 import Data.Map.Strict qualified as Map
-import Data.String (fromString)
 import HsGrad.Core.Backprop (GradError (..))
 import HsGrad.Core.Eval (Env (..), EvalError (..), bindInput, emptyEnv, evaluate, valueAt)
 import HsGrad.Core.Graph
 import HsGrad.Core.Op
+import HsGrad.Test.Examples (xorNet, xorRows, xorSlots, xorSpecs)
 import HsGrad.Test.Graphs (built)
 import HsGrad.Train.Loop
 import HsGrad.Train.Optim
@@ -33,63 +33,7 @@ import Test.Hspec.QuickCheck (prop)
 import Test.QuickCheck (Positive (..), choose, forAll, (.&&.), (===))
 
 -- ---------------------------------------------------------------------------
--- xor.hsg, by hand
-
--- | The parameters of @xor.hsg@ (@docs/01-language.md@ §1.3).
-w1Spec, b1Spec, w2Spec, b2Spec :: ParamSpec
-w1Spec = ParamSpec "W1" (Matrix 4 2) (Uniform (-1) 1)
-b1Spec = ParamSpec "b1" (Vector 4) (Constant 0)
-w2Spec = ParamSpec "w2" (Vector 4) (Uniform (-1) 1)
-b2Spec = ParamSpec "b2" Scalar (Constant 0)
-
-xorSpecs :: [ParamSpec]
-xorSpecs = [w1Spec, b1Spec, w2Spec, b2Spec]
-
--- | The dataset: inputs in {0, 1}², label -1 or 1. Columns @x[0]@, @x[1]@,
--- @y@.
-xorRows :: [[Double]]
-xorRows = [[0, 0, -1], [0, 1, 1], [1, 0, 1], [1, 1, -1]]
-
--- | The leaf name of a column in slot @i@ (D10): @xor#2.x[0]@.
-slot :: Int -> String -> Name
-slot i col = fromString ("xor#" <> show i <> "." <> col)
-
--- | The slots of a batch of @b@ rows, columns in row order.
-xorSlots :: Int -> [[Name]]
-xorSlots b = [[slot i "x[0]", slot i "x[1]", slot i "y"] | i <- [0 .. b - 1]]
-
--- | The graph of @xor.hsg@ with @b@ dataset slots:
---
--- > model net(x : Vec 2) : Real = dot(w2, tanh(W1 @ x + b1)) + b2
--- > loss = mean [ (net(x) - y) ^ 2 | (x, y) <- xor ]
---
--- Returns the loss node and, per slot, the prediction and label nodes.
-xorNet :: Int -> ((NodeId, [(NodeId, NodeId)]), Graph)
-xorNet b = built $ do
-  w1 <- leaves w1Spec
-  b1 <- leaves b1Spec
-  w2 <- leaves w2Spec
-  b2 <- param "b2"
-  let rows = [take 2 (drop (2 * r) w1) | r <- [0 .. 3]]
-  perSlot <- forM [0 .. b - 1] $ \i -> do
-    x <- mapM input [slot i "x[0]", slot i "x[1]"]
-    y <- input (slot i "y")
-    h <- forM (zip rows b1) $ \(wr, bi) -> do
-      s <- dot wr x
-      binary Add s bi >>= unary Tanh
-    out <- dot w2 h
-    p <- binary Add out b2
-    sq <- binary Sub p y >>= unary (PowC 2)
-    pure ((p, y), sq)
-  total <- sumOf (map snd perSlot)
-  count <- constant (fromIntegral b)
-  loss <- binary Div total count
-  pure (loss, map fst perSlot)
-  where
-    leaves = mapM param . elementNames
-    dot us vs = zipWithM (binary Mul) us vs >>= sumOf
-    sumOf (n : ns) = foldM (binary Add) n ns
-    sumOf [] = constant 0
+-- xor.hsg, by hand (the net itself is in "HsGrad.Test.Examples")
 
 -- | Train the XOR net with @b@ slots.
 xorRun :: Int -> TrainConfig -> Run

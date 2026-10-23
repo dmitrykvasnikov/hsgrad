@@ -1,0 +1,8 @@
+-- E0405: --batch larger than the dataset.
+-- golden: --batch 10
+data xor : { x : Vec 2, y : Real } = rows [
+  ([0, 0], -1),
+  ([0, 1],  1),
+  ([1, 0],  1),
+  ([1, 1], -1)
+]

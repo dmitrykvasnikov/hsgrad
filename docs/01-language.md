@@ -155,8 +155,16 @@ data moons : { x : Vec 2, y : Real } = csv "data/moons.csv" { x = [x1, x2], y = 
 - `rows`: each row is a tuple with one literal per field. For a schema with
   one field, the bare literal is allowed.
 - `csv`: the file must have a header row. The mapping tells which column
-  feeds each field: a single column for `Real`, a bracketed list of columns
-  for `Vec n`. Paths are relative to the `.hsg` file.
+  feeds each field: a single column for `Real`, a bracketed list of
+  exactly `n` columns for `Vec n`; every field is mapped once. Paths are
+  relative to the `.hsg` file, so `examples/moons.hsg` reads
+  `examples/data/moons.csv`.
+- The CSV format: UTF-8 text, comma-separated, a header line of column
+  names, then one line per row with one cell per column. Spaces around a
+  cell don't count; a cell may be quoted (`"x1"`, with `""` for a quote
+  inside). Blank lines may only end the file. Mapped columns must hold
+  finite decimal numbers (`2`, `-0.5`, `.5`, `1e-4`); other columns may
+  hold anything.
 - A dataset is **not** a value. It can only appear as the source of a
   comprehension (§5.6).
 
@@ -476,9 +484,9 @@ spans and notes. The format is shown in `00-architecture.md` §6.
 | Code | Meaning |
 |---|---|
 | E0401 | CSV file not found or unreadable |
-| E0402 | Column named in the mapping is missing from the header |
-| E0403 | Non-numeric cell (file:row:column) |
-| E0404 | Inline row doesn't match the schema |
+| E0402 | Column named in the mapping is missing from the header, or appears in it more than once |
+| E0403 | Non-numeric cell, or a malformed CSV line (wrong number of cells, bad quoting, a blank line before the end), at file:row:column |
+| E0404 | Inline row or CSV column mapping doesn't match the schema |
 | E0405 | Empty dataset, or `--batch` larger than the dataset |
 
 ### E05xx: runtime
@@ -503,5 +511,7 @@ spans and notes. The format is shown in `00-architecture.md` §6.
 - Generic checking of function bodies independent of call sites (D8 upgrade).
 - `Mat` fields in dataset schemas.
 - Several generators in one comprehension (for example `(x, y) <- d, p <- params`).
+- CSV columns whose names are not identifiers (`x 1`, a keyword such as
+  `data`) can't be mapped; a quoted form `x = ["x 1"]` would allow it.
 - Integer-valued metrics such as accuracy for `--report-every`. For now:
   `sign(prediction) == label` when the model returns `Real`.

@@ -1,0 +1,7 @@
+x1,x2,label,comment
+0.5,1.5,1,fine
+0.5,abc,-1,a typo
+,2.5,1,x1 is missing
+0.1,2.0x,1,
+0.3,nan,1,
+1e999,0.2,-1,too large

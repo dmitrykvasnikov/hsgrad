@@ -1,0 +1,12 @@
+error[E0405]: dataset `points` is empty
+ --> test/golden/data/empty.hsg:3:7
+  |
+3 |   csv "empty.csv" { x = [x1, x2], y = label }
+  |       ^^^^^^^^^^^ `test/golden/data/empty.csv` has no rows
+  |
+ ::: test/golden/data/empty.csv:1:1
+  |
+1 | x1,x2,label
+  | ----------- only a header
+
+1 error

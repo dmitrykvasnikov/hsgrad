@@ -1,0 +1,73 @@
+error[E0404]: field `x` is a `Vec 2`, but 1 column is mapped to it
+ --> test/golden/data/mapping.hsg:3:60
+  |
+3 | data a : { x : Vec 2, y : Real } = csv "mapping.csv" { x = [x1], y = [label] }
+  |      -                                                     ^^^^ 1 column
+  |      |
+  |      schema `{ x : Vec 2, y : Real }`
+
+error[E0404]: field `y` is a `Real`: it takes one column, without brackets
+ --> test/golden/data/mapping.hsg:3:70
+  |
+3 | data a : { x : Vec 2, y : Real } = csv "mapping.csv" { x = [x1], y = [label] }
+  |      -                                                               ^^^^^^^ a list of columns
+  |      |
+  |      schema `{ x : Vec 2, y : Real }`
+  |
+  = hint: write `y = label`
+
+error[E0404]: field `y` has no column
+ --> test/golden/data/mapping.hsg:4:36
+  |
+4 | data b : { x : Vec 2, y : Real } = csv "mapping.csv" { x = x1, z = label }
+  |      -                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ no column for `y`
+  |      |
+  |      schema `{ x : Vec 2, y : Real }`
+  |
+  = hint: add `y = …` to the mapping
+
+error[E0404]: field `x` is a `Vec 2`: it takes a list of 2 columns
+ --> test/golden/data/mapping.hsg:4:60
+  |
+4 | data b : { x : Vec 2, y : Real } = csv "mapping.csv" { x = x1, z = label }
+  |      -                                                     ^^ a single column
+  |      |
+  |      schema `{ x : Vec 2, y : Real }`
+
+error[E0404]: `z` is not a field of dataset `b`
+ --> test/golden/data/mapping.hsg:4:64
+  |
+4 | data b : { x : Vec 2, y : Real } = csv "mapping.csv" { x = x1, z = label }
+  |      -                                                         ^ not a field
+  |      |
+  |      schema `{ x : Vec 2, y : Real }`
+
+error[E0404]: field `y` has no column
+ --> test/golden/data/mapping.hsg:5:36
+  |
+5 | data c : { x : Vec 2, y : Real } = csv "mapping.csv" { x = [x1, x2], x = [x2, x1] }
+  |      -                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ no column for `y`
+  |      |
+  |      schema `{ x : Vec 2, y : Real }`
+  |
+  = hint: add `y = …` to the mapping
+
+error[E0404]: field `x` is mapped twice
+ --> test/golden/data/mapping.hsg:5:70
+  |
+5 | data c : { x : Vec 2, y : Real } = csv "mapping.csv" { x = [x1, x2], x = [x2, x1] }
+  |                                                        -             ^ mapped again here
+  |                                                        |
+  |                                                        first mapped here
+
+error[E0404]: field `x` is a `Vec 1`: it takes a list of 1 column
+ --> test/golden/data/mapping.hsg:6:60
+  |
+6 | data d : { x : Vec 1, y : Real } = csv "mapping.csv" { x = x1, y = label }
+  |      -                                                     ^^ a single column
+  |      |
+  |      schema `{ x : Vec 1, y : Real }`
+  |
+  = hint: write `x = [x1]`
+
+8 errors

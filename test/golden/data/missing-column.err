@@ -1,0 +1,27 @@
+error[E0402]: no column `x_2` in `test/golden/data/missing-column.csv`
+ --> test/golden/data/missing-column.hsg:3:39
+  |
+3 |   csv "missing-column.csv" { x = [x1, x_2], y = lable }
+  |                                       ^^^ not in the header
+  |
+ ::: test/golden/data/missing-column.csv:1:1
+  |
+1 | x1,x2,label
+  | ----------- the header
+  |
+  = hint: did you mean `x2`?
+
+error[E0402]: no column `lable` in `test/golden/data/missing-column.csv`
+ --> test/golden/data/missing-column.hsg:3:49
+  |
+3 |   csv "missing-column.csv" { x = [x1, x_2], y = lable }
+  |                                                 ^^^^^ not in the header
+  |
+ ::: test/golden/data/missing-column.csv:1:1
+  |
+1 | x1,x2,label
+  | ----------- the header
+  |
+  = hint: did you mean `label`?
+
+2 errors

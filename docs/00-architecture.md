@@ -287,6 +287,7 @@ learning project.
 | `megaparsec`, `parser-combinators` | parser, operator precedence |
 | `optparse-applicative` | CLI |
 | `random` | parameter initialisation, mini-batch sampling |
+| `filepath` | CSV paths relative to the `.hsg` file |
 | `hspec`, `QuickCheck` | tests |
 
 Hand-written: the Graphviz DOT writer, the CSV reader, the diagnostics

@@ -1,0 +1,4 @@
+-- E0403: cells of mapped columns that are not numbers; the comment column
+-- is not mapped, so its text is fine.
+data points : { x : Vec 2, y : Real } =
+  csv "non-numeric.csv" { x = [x1, x2], y = label }

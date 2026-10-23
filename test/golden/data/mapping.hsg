@@ -1,0 +1,6 @@
+-- E0404: column mappings that don't match the schema. The file is never
+-- read: the mapping is checked first.
+data a : { x : Vec 2, y : Real } = csv "mapping.csv" { x = [x1], y = [label] }
+data b : { x : Vec 2, y : Real } = csv "mapping.csv" { x = x1, z = label }
+data c : { x : Vec 2, y : Real } = csv "mapping.csv" { x = [x1, x2], x = [x2, x1] }
+data d : { x : Vec 1, y : Real } = csv "mapping.csv" { x = x1, y = label }
