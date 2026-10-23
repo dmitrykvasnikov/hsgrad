@@ -1,0 +1,6 @@
+dist-newstyle/
+*.dot
+*.svg
+*.png
+.ghc.environment.*
+cabal.project.local*
