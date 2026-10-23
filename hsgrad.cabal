@@ -29,7 +29,10 @@ common shared
 library
   import:           shared
   hs-source-dirs:   src
-  exposed-modules:  HsGrad
+  exposed-modules:
+    , HsGrad
+    , HsGrad.Core.Op
+  build-depends:    text ^>=2.1
   other-modules:    Paths_hsgrad
   autogen-modules:  Paths_hsgrad
 
@@ -45,7 +48,9 @@ test-suite spec
   type:             exitcode-stdio-1.0
   hs-source-dirs:   test
   main-is:          Main.hs
-  other-modules:    HsGradSpec
+  other-modules:
+    , HsGrad.Core.OpSpec
+    , HsGradSpec
   build-depends:
     , hsgrad
     , hspec       ^>=2.11

@@ -6,9 +6,11 @@ module Main
   ( main
   ) where
 
+import HsGrad.Core.OpSpec qualified
 import HsGradSpec qualified
 import Test.Hspec (describe, hspec)
 
 main :: IO ()
 main = hspec $ do
   describe "HsGrad" HsGradSpec.spec
+  describe "HsGrad.Core.Op" HsGrad.Core.OpSpec.spec
