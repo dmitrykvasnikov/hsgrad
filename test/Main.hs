@@ -13,6 +13,9 @@ import HsGrad.Core.OpSpec qualified
 import HsGrad.Core.PrettySpec qualified
 import HsGrad.Core.SimplifySpec qualified
 import HsGrad.Core.SymbolicSpec qualified
+import HsGrad.Train.LoopSpec qualified
+import HsGrad.Train.OptimSpec qualified
+import HsGrad.Train.ParamSpec qualified
 import HsGrad.Viz.DotSpec qualified
 import HsGradSpec qualified
 import Test.Hspec (describe, hspec)
@@ -28,3 +31,6 @@ main = hspec $ do
   describe "HsGrad.Viz.Dot" HsGrad.Viz.DotSpec.spec
   describe "HsGrad.Core.Simplify" HsGrad.Core.SimplifySpec.spec
   describe "HsGrad.Core.Pretty" HsGrad.Core.PrettySpec.spec
+  describe "HsGrad.Train.Param" HsGrad.Train.ParamSpec.spec
+  describe "HsGrad.Train.Optim" HsGrad.Train.OptimSpec.spec
+  describe "HsGrad.Train.Loop" HsGrad.Train.LoopSpec.spec
