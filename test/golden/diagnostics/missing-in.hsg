@@ -1,0 +1,5 @@
+input x : Real = 1.5
+
+model m(x : Real) : Real =
+  let h = tanh(x)
+  h * 2

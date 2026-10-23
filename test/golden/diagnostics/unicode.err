@@ -1,0 +1,9 @@
+error[E0401]: cannot read CSV file `data/møøns.csv`
+ --> examples/unicode.hsg:2:7
+  |
+2 |   csv "data/møøns.csv" { x = [x1, x2], y = label }
+  |   --- ^^^^^^^^^^^^^^^^ no such file
+  |
+  = note: paths are relative to the .hsg file: looked for examples/data/møøns.csv
+
+1 error

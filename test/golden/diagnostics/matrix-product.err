@@ -1,0 +1,9 @@
+error[E0302]: shape mismatch in matrix product
+  --> examples/moons.hsg:14:17
+   |
+14 |   let h2 = relu(W2 @ h1 + b2) in
+   |                 ^^^^^^^ Mat 16 16 @ Vec 8
+   |
+   = note: h1 : Vec 8 because W1 : Mat 8 2 (declared at 6:7)
+
+1 error

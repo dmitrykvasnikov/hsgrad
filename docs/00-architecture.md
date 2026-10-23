@@ -241,11 +241,12 @@ declaration (see `01-language.md`).
 ## 6. Error handling
 
 All user-facing errors go through one `Diagnostic` type: a code
-(`E0301`), a severity, a message, a primary span with a label, optional
-secondary spans, and notes. One renderer prints them Rust/Elm style:
+(`E0302`), a severity, a message, a primary span with a label, optional
+secondary spans, and notes. One renderer prints them Rust/Elm style
+(`11-diagnostics.md`):
 
 ```
-error[E0301]: shape mismatch in matrix product
+error[E0302]: shape mismatch in matrix product
   --> examples/moons.hsg:14:17
    |
 14 |   let h2 = relu(W2 @ h1 + b2) in
@@ -267,8 +268,9 @@ first. Error codes are listed in `01-language.md` §10.
 - **Simplifier soundness**: evaluating before and after simplification gives
   the same value on random inputs (away from singularities).
 - **Parser round-trip**: pretty-print the AST, parse it back, get the same AST.
-- **Golden tests** for diagnostics: each `test/golden/*.hsg` has an expected
-  `*.err` output, so error message quality is under test.
+- **Golden tests** for diagnostics: each `test/golden/<stage>/*.hsg` has an
+  expected `*.err` output, so error message quality is under test
+  (`11-diagnostics.md` §5 explains the harness).
 - **End-to-end**: `moons.hsg` trains to ≥ 95% accuracy with a fixed seed.
 
 ## 8. Dependencies

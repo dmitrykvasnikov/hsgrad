@@ -1,0 +1,9 @@
+error[E0201]: undefined name `sigmod`
+ --> tabs.hsg:4:12
+  |
+4 |     relu(z) +   sigmod(z)
+  |                 ^^^^^^ not defined
+  |
+  = hint: did you mean `sigmoid`?
+
+1 error

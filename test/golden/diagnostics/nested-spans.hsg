@@ -1,0 +1,5 @@
+fn f(x : Vec 2) : Real =
+  let s = dot(x,
+              x) in
+  s + [1,
+       2]

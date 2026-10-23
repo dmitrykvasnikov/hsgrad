@@ -1,0 +1,32 @@
+warning[W0202]: `unused` is never used
+ --> several.hsg:5:7
+  |
+5 | param unused : Real = 0
+  |       ^^^^^^
+
+warning[W0201]: `x` shadows a parameter
+ --> several.hsg:8:7
+  |
+7 | fn neuron(w : Vec n, b : Real, x : Vec n) : Real =
+  |                                - shadows this one
+8 |   let x = tanh(dot(w, x) + b) in
+  |       ^ this `x`
+
+error[E0202]: duplicate declaration of `w`
+  --> several.hsg:11:7
+   |
+3  | param w : Vec 2 ~ uniform(-1, 1)
+   |       - first declared here
+...
+11 | param w : Real = 1
+   |       ^ declared again here
+
+error[E0201]: undefined name `xx`
+  --> several.hsg:12:22
+   |
+12 | let y = neuron(w, b, xx)
+   |                      ^^ not defined
+   |
+   = hint: did you mean `x`?
+
+2 errors, 2 warnings

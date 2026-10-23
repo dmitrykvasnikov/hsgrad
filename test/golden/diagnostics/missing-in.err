@@ -1,0 +1,12 @@
+error[E0104]: `let` expression without `in`
+ --> missing-in.hsg:4:18
+  |
+4 |   let h = tanh(x)
+  |   ---            ^ expected `in` here
+  |   |
+  |   this `let` is inside an expression
+  |
+  = hint: inside an expression write `let h = … in body`;
+          only a top-level `let` needs no `in`
+
+1 error

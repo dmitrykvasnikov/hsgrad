@@ -1,0 +1,12 @@
+error[E0308]: body doesn't match the declared result type
+ --> body-mismatch.hsg:5:3
+  |
+4 |   fn layer(x : Vec 2) : Real =
+  |                         ---- expected `Real` because of this
+5 | /   let z = W @ x + b in
+6 | |   tanh(z)
+  | |_________^ this is `Vec 2`
+  |
+  = hint: use `sum(…)`, `dot(…)` or an index `[i]` to get a `Real`
+
+1 error

@@ -1,0 +1,16 @@
+error[E0301]: elementwise operands with incompatible shapes
+ --> two-lanes.hsg:3:7
+  |
+1 |   let u = [1, 2,
+  |  _________-
+2 | |          3]
+  | |___________- `Vec 3`
+3 |         + [4,
+  |         ^ `Vec 3 + Vec 2`
+  |  _________-
+4 | |          5]
+  | |___________- `Vec 2`
+  |
+  = note: elementwise operations need equal shapes, or a `Real` on one side
+
+1 error

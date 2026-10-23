@@ -1,0 +1,5 @@
+input x : Vec 2 = [1.0, 2.0]
+
+fn act(z) =
+	relu(z) +	sigmod(z)
+let y = act(x)

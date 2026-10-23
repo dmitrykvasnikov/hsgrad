@@ -1,0 +1,13 @@
+error[E0311]: a comprehension can only be the argument of `sum` or `mean`
+ --> comprehension.hsg:7:14
+  |
+7 |   let errors = [ (dot(w, x) - y) ^ 2
+  |  ______________^
+8 | |              | (x, y) <- xor ]
+  | |______________________________^ this is a sequence of `Real`
+9 |   loss = errors
+  |          ------ used as a value here
+  |
+  = hint: to average the errors, write `mean [ … ]`
+
+1 error

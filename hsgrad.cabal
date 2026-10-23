@@ -38,6 +38,8 @@ library
     , HsGrad.Core.Pretty
     , HsGrad.Core.Simplify
     , HsGrad.Core.Symbolic
+    , HsGrad.Lang.Diagnostic
+    , HsGrad.Lang.Span
     , HsGrad.Train.Loop
     , HsGrad.Train.Optim
     , HsGrad.Train.Param
@@ -70,7 +72,10 @@ test-suite spec
     , HsGrad.Core.PrettySpec
     , HsGrad.Core.SimplifySpec
     , HsGrad.Core.SymbolicSpec
+    , HsGrad.Lang.DiagnosticSpec
+    , HsGrad.Lang.SpanSpec
     , HsGrad.Test.Examples
+    , HsGrad.Test.Golden
     , HsGrad.Test.Graphs
     , HsGrad.Train.LoopSpec
     , HsGrad.Train.OptimSpec
@@ -80,6 +85,7 @@ test-suite spec
   build-depends:
     , containers  ^>=0.7
     , directory   ^>=1.3
+    , filepath    ^>=1.5
     , hsgrad
     , hspec       ^>=2.11
     , mtl         ^>=2.3

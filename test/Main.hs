@@ -13,6 +13,8 @@ import HsGrad.Core.OpSpec qualified
 import HsGrad.Core.PrettySpec qualified
 import HsGrad.Core.SimplifySpec qualified
 import HsGrad.Core.SymbolicSpec qualified
+import HsGrad.Lang.DiagnosticSpec qualified
+import HsGrad.Lang.SpanSpec qualified
 import HsGrad.Train.LoopSpec qualified
 import HsGrad.Train.OptimSpec qualified
 import HsGrad.Train.ParamSpec qualified
@@ -34,3 +36,5 @@ main = hspec $ do
   describe "HsGrad.Train.Param" HsGrad.Train.ParamSpec.spec
   describe "HsGrad.Train.Optim" HsGrad.Train.OptimSpec.spec
   describe "HsGrad.Train.Loop" HsGrad.Train.LoopSpec.spec
+  describe "HsGrad.Lang.Span" HsGrad.Lang.SpanSpec.spec
+  describe "HsGrad.Lang.Diagnostic" HsGrad.Lang.DiagnosticSpec.spec

@@ -466,6 +466,7 @@ spans and notes. The format is shown in `00-architecture.md` §6.
 | E0501 | Non-finite value (NaN/∞), reported at the source span of the producing node |
 | E0502 | Input has no value (no default, no `--set`) |
 | E0503 | `--set` value has the wrong shape |
+| E0504 | Non-finite gradient (NaN/∞) during backprop, reported at the node that passes it on |
 
 ### Warnings
 

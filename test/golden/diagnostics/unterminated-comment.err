@@ -1,0 +1,12 @@
+error[E0102]: unterminated block comment
+ --> unterminated-comment.hsg:2:1
+  |
+2 | {- The rest of the file is disabled
+  | ^^ this comment is never closed
+3 | let b = a * 2
+4 |
+  | - the file ends here
+  |
+  = hint: close it with `-}`
+
+1 error

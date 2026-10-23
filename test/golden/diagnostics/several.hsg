@@ -1,0 +1,12 @@
+-- Several problems at once; they are reported in source order.
+input x : Vec 2 = [1.0, 2.0]
+param w : Vec 2 ~ uniform(-1, 1)
+param b : Real  = 0
+param unused : Real = 0
+
+fn neuron(w : Vec n, b : Real, x : Vec n) : Real =
+  let x = tanh(dot(w, x) + b) in
+  x
+
+param w : Real = 1
+let y = neuron(w, b, xx)

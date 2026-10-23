@@ -1,0 +1,2 @@
+data moons : { x : Vec 2, y : Real } =
+  csv "data/møøns.csv" { x = [x1, x2], y = label }

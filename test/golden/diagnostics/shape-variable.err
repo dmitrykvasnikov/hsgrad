@@ -1,0 +1,14 @@
+error[E0303]: shape variable `n` bound inconsistently
+ --> shape-variable.hsg:8:22
+  |
+5 | fn neuron(w : Vec n, b : Real, x : Vec n) : Real =
+  |               -----                ----- both parameters have length `n`
+...
+8 | let y = neuron(w, b, x)
+  |                -     ^ `Vec 2`, so `n = 2` here
+  |                |
+  |                `Vec 3`, so `n = 3` here
+  |
+  = note: while checking the call at shape-variable.hsg:8:9
+
+1 error

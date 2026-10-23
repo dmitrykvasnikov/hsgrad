@@ -1,0 +1,6 @@
+param W : Mat 2 2 ~ uniform(-1, 1)
+param b : Vec 2   = 0
+
+fn layer(x : Vec 2) : Real =
+  let z = W @ x + b in
+  tanh(z)

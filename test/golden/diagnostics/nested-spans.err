@@ -1,0 +1,16 @@
+error[E0308]: body doesn't match the declared result type
+ --> nested-spans.hsg:2:3
+  |
+1 |    fn f(x : Vec 2) : Real =
+  |                      ---- expected `Real` because of this
+2 | /    let s = dot(x,
+  | | ___________-
+3 | ||               x) in
+  | ||________________- `Real`
+4 | |    s + [1,
+  | | _______-
+5 | ||        2]
+  | ||_________- `Vec 2`
+  | |__________^ this is `Vec 2`
+
+1 error
