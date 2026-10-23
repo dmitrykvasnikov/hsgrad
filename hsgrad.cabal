@@ -35,6 +35,8 @@ library
     , HsGrad.Core.Eval
     , HsGrad.Core.Graph
     , HsGrad.Core.Op
+    , HsGrad.Core.Pretty
+    , HsGrad.Core.Simplify
     , HsGrad.Core.Symbolic
     , HsGrad.Viz.Dot
   build-depends:
@@ -61,6 +63,8 @@ test-suite spec
     , HsGrad.Core.EvalSpec
     , HsGrad.Core.GraphSpec
     , HsGrad.Core.OpSpec
+    , HsGrad.Core.PrettySpec
+    , HsGrad.Core.SimplifySpec
     , HsGrad.Core.SymbolicSpec
     , HsGrad.Test.Examples
     , HsGrad.Test.Graphs

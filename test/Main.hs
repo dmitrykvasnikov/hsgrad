@@ -10,6 +10,8 @@ import HsGrad.Core.BackpropSpec qualified
 import HsGrad.Core.EvalSpec qualified
 import HsGrad.Core.GraphSpec qualified
 import HsGrad.Core.OpSpec qualified
+import HsGrad.Core.PrettySpec qualified
+import HsGrad.Core.SimplifySpec qualified
 import HsGrad.Core.SymbolicSpec qualified
 import HsGrad.Viz.DotSpec qualified
 import HsGradSpec qualified
@@ -24,3 +26,5 @@ main = hspec $ do
   describe "HsGrad.Core.Backprop" HsGrad.Core.BackpropSpec.spec
   describe "HsGrad.Core.Symbolic" HsGrad.Core.SymbolicSpec.spec
   describe "HsGrad.Viz.Dot" HsGrad.Viz.DotSpec.spec
+  describe "HsGrad.Core.Simplify" HsGrad.Core.SimplifySpec.spec
+  describe "HsGrad.Core.Pretty" HsGrad.Core.PrettySpec.spec
