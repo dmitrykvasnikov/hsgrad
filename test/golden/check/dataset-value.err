@@ -1,0 +1,34 @@
+error[E0313]: `moons` is a dataset, not a value
+ --> dataset-value.hsg:5:9
+  |
+2 | data moons : { x : Vec 2, y : Real } =
+  |      ----- declared here
+...
+5 | let a = moons
+  |         ^^^^^ used as a value
+  |
+  = hint: a dataset can only be iterated over: `[ … | (x, y) <- moons ]`
+
+error[E0313]: `moons` is a dataset, not a value
+ --> dataset-value.hsg:6:9
+  |
+2 | data moons : { x : Vec 2, y : Real } =
+  |      ----- declared here
+...
+6 | let b = moons(1)
+  |         ^^^^^ called here
+  |
+  = hint: a dataset can only be iterated over: `[ … | (x, y) <- moons ]`
+
+error[E0313]: `moons` is a dataset, not a value
+ --> dataset-value.hsg:7:13
+  |
+2 | data moons : { x : Vec 2, y : Real } =
+  |      ----- declared here
+...
+7 | let c = sum(moons)
+  |             ^^^^^ used as a value
+  |
+  = hint: a dataset can only be iterated over: `[ … | (x, y) <- moons ]`
+
+3 errors

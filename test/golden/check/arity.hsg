@@ -1,0 +1,9 @@
+-- E0205: wrong number of arguments, for a user function and a built-in one.
+param W : Mat 2 2 ~ uniform(-1, 1)
+param b : Vec 2   = 0
+
+fn layer(W : Mat m n, b : Vec m, x : Vec n) : Vec m = W @ x + b
+
+let h = layer(W, b)
+let s = dot(h)
+let t = tanh(h, h)

@@ -1,0 +1,11 @@
+-- E0305 and E0306: indices are checked against the shape.
+input v : Vec 3 = [1, 2, 3]
+param M : Mat 4 2 ~ uniform(-1, 1)
+
+let a = v[3]
+let b = M[4]
+let c = M[1, 2]
+let d = v[0][0]
+let e = v[1, 2]
+let h = M @ [1, 2]
+let f = h[4]

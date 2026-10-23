@@ -1,0 +1,7 @@
+-- E0201: undefined names, with a suggestion when one is close enough.
+input x : Vec 2 = [1, 2]
+param weights : Vec 2 ~ uniform(-1, 1)
+param bias : Real ~ unifrom(-1, 1)
+
+let y = sigmod(dot(wieghts, x) + bias)
+let z = frobnicate(x)

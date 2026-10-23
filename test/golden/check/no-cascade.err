@@ -1,0 +1,37 @@
+error[E0309]: shape variable `n` in a `param`
+ --> no-cascade.hsg:3:17
+  |
+3 | param W : Mat 4 n ~ uniform(-1, 1)
+  |                 ^ a shape variable
+  |
+  = note: a `param` needs a concrete type: shape variables belong in `fn` signatures
+
+error[E0201]: undefined name `undefined_thing`
+  --> no-cascade.hsg:12:9
+   |
+12 | let g = undefined_thing * 2
+   |         ^^^^^^^^^^^^^^^ not defined
+
+error[E0302]: shape mismatch in matrix product
+  --> no-cascade.hsg:17:31
+   |
+17 | fn layer(v : Vec 3) : Vec 4 = v @ v
+   |                               ^^^^^ `Vec 3 @ Vec 3`
+   |
+   = hint: for the inner product of two vectors write `dot(u, v)`
+
+error[E0301]: elementwise operands with incompatible shapes
+  --> no-cascade.hsg:19:9
+   |
+19 | let r = u + x
+   |         ^^^^^ `Vec 4 + Vec 3`
+   |
+   = note: elementwise operations need equal shapes, or a `Real` on one side
+
+error[E0201]: undefined name `nothing`
+  --> no-cascade.hsg:22:21
+   |
+22 | let k : Vec 3 = x + nothing
+   |                     ^^^^^^^ not defined
+
+5 errors

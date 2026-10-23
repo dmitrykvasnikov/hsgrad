@@ -1,0 +1,23 @@
+-- Several independent errors. Names whose declaration failed are
+-- poisoned: their uses produce no follow-up errors.
+param W : Mat 4 n ~ uniform(-1, 1)
+param b : Vec 4 = 0
+input x : Vec 3 = [1, 2, 3]
+
+-- W is poisoned, so nothing below complains about it.
+let h = tanh(W @ x + b)
+let s = sum(h)
+
+-- An undefined name poisons `g`, and `g` poisons `t`.
+let g = undefined_thing * 2
+let t = g + [1, 2] + x
+
+-- `layer` has a broken body, but its signature still types its calls:
+-- `u` is `Vec 4`, so `u + x` is still checked (and wrong).
+fn layer(v : Vec 3) : Vec 4 = v @ v
+let u = layer(x)
+let r = u + x
+
+-- An annotation types a `let` whose body is broken.
+let k : Vec 3 = x + nothing
+let q = dot(k, x)

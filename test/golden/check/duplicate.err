@@ -1,0 +1,59 @@
+warning[W0202]: `w` is never used
+ --> duplicate.hsg:2:7
+  |
+2 | param w : Vec 2 ~ uniform(-1, 1)
+  |       ^
+
+error[E0202]: duplicate declaration of `w`
+ --> duplicate.hsg:3:7
+  |
+2 | param w : Vec 2 ~ uniform(-1, 1)
+  |       - first declared here
+3 | param w : Real = 1
+  |       ^ declared again here
+
+error[E0202]: duplicate field `x`
+ --> duplicate.hsg:5:23
+  |
+5 | data d : { x : Vec 2, x : Real } = rows [ ([0, 0], 1) ]
+  |            -          ^ declared again here
+  |            |
+  |            first declared here
+
+warning[W0202]: `f` is never used
+ --> duplicate.hsg:7:4
+  |
+7 | fn f(a, a) = a
+  |    ^
+
+error[E0202]: duplicate parameter `a`
+ --> duplicate.hsg:7:9
+  |
+7 | fn f(a, a) = a
+  |      -  ^ declared again here
+  |      |
+  |      first declared here
+
+error[E0202]: `sum` is a built-in function
+ --> duplicate.hsg:8:5
+  |
+8 | let sum = 1
+  |     ^^^ declared again here
+  |
+  = note: built-in functions can't be redefined; choose another name
+
+error[E0201]: undefined name `y`
+ --> duplicate.hsg:9:20
+  |
+9 | let s = mean [ x * y | (x, x) <- d ]
+  |                    ^ not defined
+
+error[E0202]: duplicate comprehension variable `x`
+ --> duplicate.hsg:9:28
+  |
+9 | let s = mean [ x * y | (x, x) <- d ]
+  |                         -  ^ declared again here
+  |                         |
+  |                         first declared here
+
+6 errors, 2 warnings

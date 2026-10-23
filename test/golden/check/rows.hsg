@@ -1,0 +1,10 @@
+-- E0312: vector and matrix literals. A broken default leaves the declared
+-- type intact, so `M @ v` below is fine.
+input M : Mat 2 2 = [[1, 2], [3]]
+input v : Vec 2 = [1, [2, 3]]
+
+let a = [[1, 2], [3, 4, 5]]
+let b = [1, [2, 3]]
+let c = [[[1]]]
+let d = [a, [1, 2]]
+let e = M @ v

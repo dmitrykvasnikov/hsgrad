@@ -1,0 +1,9 @@
+error[E0310]: comprehension over `params`, but the file declares no `param`
+ --> no-params.hsg:3:35
+  |
+3 | let reg = sum [ sum(p ^ 2) | p <- params ]
+  |                                   ^^^^^^ there are no parameters
+  |
+  = note: the body has no iteration to give it a shape
+
+1 error

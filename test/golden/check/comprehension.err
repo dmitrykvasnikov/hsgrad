@@ -1,0 +1,21 @@
+error[E0311]: a comprehension can only be the argument of `sum` or `mean`
+ --> comprehension.hsg:8:14
+  |
+8 |   let errors = [ (dot(w, x) - y) ^ 2
+  |  ______________^
+9 | |              | (x, y) <- xor ]
+  | |______________________________^ this is a sequence of `Real`
+  |
+  = hint: reduce it to a value with `sum [ … ]` or `mean [ … ]`
+
+error[E0311]: a comprehension can only be the argument of `sum` or `mean`
+  --> comprehension.hsg:10:21
+   |
+10 | let squashed = tanh([ y | (_x, y) <- xor ])
+   |                ---- ^^^^^^^^^^^^^^^^^^^^^^ this is a sequence of `Real`
+   |                |
+   |                `tanh` can't take a sequence
+   |
+   = hint: reduce it to a value with `sum [ … ]` or `mean [ … ]`
+
+2 errors

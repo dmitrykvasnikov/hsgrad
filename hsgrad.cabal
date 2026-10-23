@@ -38,8 +38,10 @@ library
     , HsGrad.Core.Pretty
     , HsGrad.Core.Simplify
     , HsGrad.Core.Symbolic
+    , HsGrad.Lang.Check
     , HsGrad.Lang.Diagnostic
     , HsGrad.Lang.Parser
+    , HsGrad.Lang.Shape
     , HsGrad.Lang.Span
     , HsGrad.Lang.Syntax
     , HsGrad.Train.Loop
@@ -76,8 +78,10 @@ test-suite spec
     , HsGrad.Core.PrettySpec
     , HsGrad.Core.SimplifySpec
     , HsGrad.Core.SymbolicSpec
+    , HsGrad.Lang.CheckSpec
     , HsGrad.Lang.DiagnosticSpec
     , HsGrad.Lang.ParserSpec
+    , HsGrad.Lang.ShapeSpec
     , HsGrad.Lang.SpanSpec
     , HsGrad.Lang.SyntaxSpec
     , HsGrad.Test.Examples

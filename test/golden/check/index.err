@@ -1,0 +1,51 @@
+error[E0305]: index 3 is out of bounds for `Vec 3`
+ --> index.hsg:5:11
+  |
+5 | let a = v[3]
+  |         - ^ valid indices are 0 to 2
+  |         |
+  |         this is `Vec 3`
+
+error[E0305]: row index 4 is out of bounds for `Mat 4 2`
+ --> index.hsg:6:11
+  |
+6 | let b = M[4]
+  |         - ^ valid row indices are 0 to 3
+  |         |
+  |         this is `Mat 4 2`
+
+error[E0305]: column index 2 is out of bounds for `Mat 4 2`
+ --> index.hsg:7:14
+  |
+7 | let c = M[1, 2]
+  |         -    ^ valid column indices are 0 to 1
+  |         |
+  |         this is `Mat 4 2`
+
+error[E0306]: indexing a `Real`
+ --> index.hsg:8:13
+  |
+8 | let d = v[0][0]
+  |         ----^^^ a `Real` has no elements
+  |         |
+  |         this is `Real`
+
+error[E0306]: too many indices for `Vec 3`
+ --> index.hsg:9:14
+  |
+9 | let e = v[1, 2]
+  |         -    ^ one index too many
+  |         |
+  |         this is `Vec 3`, which takes one index
+
+error[E0305]: index 4 is out of bounds for `Vec 4`
+  --> index.hsg:11:11
+   |
+11 | let f = h[4]
+   |         - ^ valid indices are 0 to 3
+   |         |
+   |         this is `Vec 4`
+   |
+   = note: h : Vec 4 because M : Mat 4 2 (declared at 3:7)
+
+6 errors

@@ -1,0 +1,31 @@
+error[E0303]: shape variable `n` bound inconsistently
+  --> shape-variable.hsg:12:22
+   |
+7  | fn neuron(w : Vec n, b : Real, x : Vec n) : Real =
+   |               -----                ----- both parameters have length `n`
+...
+12 | let y = neuron(w, b, x)
+   |                -     ^ `Vec 2`, so `n = 2` here
+   |                |
+   |                `Vec 3`, so `n = 3` here
+
+error[E0303]: shape variable `n` bound inconsistently
+  --> shape-variable.hsg:13:16
+   |
+13 | let d = dot(w, x)
+   |             -  ^ `Vec 2`, so `n = 2` here
+   |             |
+   |             `Vec 3`, so `n = 3` here
+   |
+   = note: signature: dot(u : Vec n, v : Vec n) : Real
+
+error[E0303]: shape variable `n` bound inconsistently
+  --> shape-variable.hsg:14:16
+   |
+10 | fn trace2(M : Mat n n) : Real = M[0, 0] + M[1, 1]
+   |               ------- `n` appears twice here
+...
+14 | let t = trace2(A)
+   |                ^ `Mat 2 3`: `n` would be both 2 and 3
+
+3 errors

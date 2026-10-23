@@ -1,0 +1,11 @@
+-- E0304: arguments that don't fit the parameter's annotation.
+input x : Vec 2 = [1, 2]
+param W : Mat 2 2 ~ uniform(-1, 1)
+
+fn layer(W : Mat m n, x : Vec n) : Vec m = W @ x
+fn first(v : Vec 2) : Real = v[0]
+
+let a = layer(x, W)
+let b = first([1, 2, 3])
+let c = dot(x, W)
+let d = transpose(x)

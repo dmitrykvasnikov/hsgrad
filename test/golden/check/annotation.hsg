@@ -1,0 +1,15 @@
+-- E0308: values that don't match their declared type.
+input x : Vec 3 = [1, 2]
+param b : Vec 4 = [0, 0]
+param W : Mat 4 3 ~ uniform(-1, 1)
+
+fn layer(x : Vec 3) : Real =
+  let z = W @ x + b in
+  tanh(z)
+
+fn widen(v : Vec n) : Vec m =
+  let u : Vec n = W @ v in
+  u
+
+let h : Vec 3 = W @ x
+let k = widen(x)

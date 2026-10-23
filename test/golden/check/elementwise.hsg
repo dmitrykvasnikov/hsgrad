@@ -1,0 +1,9 @@
+-- E0301: elementwise operations need equal shapes, or a Real on one side.
+input x : Vec 3 = [1, 2, 3]
+param W : Mat 2 3 ~ uniform(-1, 1)
+param b : Vec 3   = 0
+
+let h = W @ x
+let y = h + b
+let z = max(x, h)
+let m = W * x

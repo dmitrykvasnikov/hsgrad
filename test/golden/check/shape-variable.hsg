@@ -1,0 +1,14 @@
+-- E0303: a shape variable bound to two different sizes.
+input x : Vec 2 = [1.0, -2.0]
+param w : Vec 3 ~ uniform(-1, 1)
+param b : Real  = 0
+param A : Mat 2 3 ~ uniform(-1, 1)
+
+fn neuron(w : Vec n, b : Real, x : Vec n) : Real =
+  tanh(dot(w, x) + b)
+
+fn trace2(M : Mat n n) : Real = M[0, 0] + M[1, 1]
+
+let y = neuron(w, b, x)
+let d = dot(w, x)
+let t = trace2(A)

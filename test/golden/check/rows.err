@@ -1,0 +1,45 @@
+error[E0312]: matrix rows of different lengths
+ --> rows.hsg:3:30
+  |
+3 | input M : Mat 2 2 = [[1, 2], [3]]
+  |                      ------  ^^^ this row has 1 element
+  |                      |
+  |                      the first row has 2 elements
+
+error[E0312]: a vector literal mixes numbers and rows
+ --> rows.hsg:4:23
+  |
+4 | input v : Vec 2 = [1, [2, 3]]
+  |                    -  ^^^^^^ this is `Vec 2`
+  |                    |
+  |                    but this is `Real`
+  |
+  = note: a literal is a vector of numbers or a matrix (a vector of rows)
+
+error[E0312]: matrix rows of different lengths
+ --> rows.hsg:6:18
+  |
+6 | let a = [[1, 2], [3, 4, 5]]
+  |          ------  ^^^^^^^^^ this row has 3 elements
+  |          |
+  |          the first row has 2 elements
+
+error[E0312]: a vector literal mixes numbers and rows
+ --> rows.hsg:7:13
+  |
+7 | let b = [1, [2, 3]]
+  |          -  ^^^^^^ this is `Vec 2`
+  |          |
+  |          but this is `Real`
+  |
+  = note: a literal is a vector of numbers or a matrix (a vector of rows)
+
+error[E0312]: a vector literal can't contain a matrix
+ --> rows.hsg:8:10
+  |
+8 | let c = [[[1]]]
+  |          ^^^^^ this is `Mat 1 1`
+  |
+  = note: a literal is a vector of numbers or a matrix (a vector of rows)
+
+5 errors

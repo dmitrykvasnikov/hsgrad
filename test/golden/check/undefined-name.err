@@ -1,0 +1,38 @@
+warning[W0202]: `weights` is never used
+ --> undefined-name.hsg:3:7
+  |
+3 | param weights : Vec 2 ~ uniform(-1, 1)
+  |       ^^^^^^^
+
+error[E0201]: unknown initialiser `unifrom`
+ --> undefined-name.hsg:4:21
+  |
+4 | param bias : Real ~ unifrom(-1, 1)
+  |                     ^^^^^^^ not an initialiser
+  |
+  = note: the initialisers are `uniform(lo, hi)` and `normal(mean, std)`
+  = hint: did you mean `uniform`?
+
+error[E0201]: undefined name `sigmod`
+ --> undefined-name.hsg:6:9
+  |
+6 | let y = sigmod(dot(wieghts, x) + bias)
+  |         ^^^^^^ not defined
+  |
+  = hint: did you mean `sigmoid`?
+
+error[E0201]: undefined name `wieghts`
+ --> undefined-name.hsg:6:20
+  |
+6 | let y = sigmod(dot(wieghts, x) + bias)
+  |                    ^^^^^^^ not defined
+  |
+  = hint: did you mean `weights`?
+
+error[E0201]: undefined name `frobnicate`
+ --> undefined-name.hsg:7:9
+  |
+7 | let z = frobnicate(x)
+  |         ^^^^^^^^^^ not defined
+
+4 errors, 1 warning

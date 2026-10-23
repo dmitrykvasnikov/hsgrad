@@ -1,0 +1,7 @@
+-- E0310: every parameter must give the same shape, and there must be some.
+param W : Mat 2 2 ~ uniform(-1, 1)
+param b : Vec 2   = 0
+param c : Real    = 0
+
+let reg = sum [ p ^ 2 | p <- params ]
+let ok = sum [ sum(p ^ 2) | p <- params ]

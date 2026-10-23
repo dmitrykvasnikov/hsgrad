@@ -13,8 +13,10 @@ import HsGrad.Core.OpSpec qualified
 import HsGrad.Core.PrettySpec qualified
 import HsGrad.Core.SimplifySpec qualified
 import HsGrad.Core.SymbolicSpec qualified
+import HsGrad.Lang.CheckSpec qualified
 import HsGrad.Lang.DiagnosticSpec qualified
 import HsGrad.Lang.ParserSpec qualified
+import HsGrad.Lang.ShapeSpec qualified
 import HsGrad.Lang.SpanSpec qualified
 import HsGrad.Lang.SyntaxSpec qualified
 import HsGrad.Train.LoopSpec qualified
@@ -42,3 +44,5 @@ main = hspec $ do
   describe "HsGrad.Lang.Diagnostic" HsGrad.Lang.DiagnosticSpec.spec
   describe "HsGrad.Lang.Syntax" HsGrad.Lang.SyntaxSpec.spec
   describe "HsGrad.Lang.Parser" HsGrad.Lang.ParserSpec.spec
+  describe "HsGrad.Lang.Shape" HsGrad.Lang.ShapeSpec.spec
+  describe "HsGrad.Lang.Check" HsGrad.Lang.CheckSpec.spec

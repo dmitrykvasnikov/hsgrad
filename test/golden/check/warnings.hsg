@@ -1,0 +1,21 @@
+-- W0201, W0202, W0203: a program that checks, with warnings.
+data d : { x : Vec 2, y : Real } = rows [ ([0, 1], 1), ([1, 0], -1) ]
+input scale : Real = 2
+input spare : Real = 0
+param w : Vec 2 ~ uniform(-1, 1)
+param b : Real = 0
+param frozen : Real = 1
+param lonely : Real = 3
+
+fn helper(t) = t * 2
+
+let shown = frozen * scale
+
+model net(x : Vec 2) : Real =
+  let w2 = w * scale in
+  let tmp = 1 in
+  dot(w2, x) + b
+
+loss = mean [ (net(x) - y) ^ 2 | (x, y) <- d ]
+  + 0 * mean [ let exp = 2 in exp | (x, _y) <- d ]
+  + 0 * mean [ y | (scale, y) <- d ]

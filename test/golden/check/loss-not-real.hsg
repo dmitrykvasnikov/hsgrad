@@ -1,0 +1,5 @@
+-- E0307: the loss must be a single number.
+data d : { x : Vec 2, y : Vec 2 } = rows [ ([0, 1], [1, 0]) ]
+param W : Mat 2 2 ~ uniform(-1, 1)
+
+loss = mean [ (W @ x - y) ^ 2 | (x, y) <- d ]

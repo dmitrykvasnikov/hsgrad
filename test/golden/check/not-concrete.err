@@ -1,0 +1,47 @@
+error[E0309]: shape variable `n` in an `input`
+ --> not-concrete.hsg:2:15
+  |
+2 | input x : Vec n
+  |               ^ a shape variable
+  |
+  = note: an `input` needs a concrete type: shape variables belong in `fn` signatures
+
+error[E0309]: a dimension must be at least 1
+ --> not-concrete.hsg:3:15
+  |
+3 | param w : Vec 0 = 0
+  |               ^ this dimension is 0
+
+error[E0309]: a dataset field can't be a matrix
+ --> not-concrete.hsg:4:16
+  |
+4 | data d : { x : Mat 2 2, y : Real } = rows [ ([[0, 1], [1, 0]], 1) ]
+  |                ^^^^^^^ not allowed in a schema
+  |
+  = note: dataset fields are `Real` or `Vec n`
+
+error[E0309]: shape variable `k` in a `model` signature
+ --> not-concrete.hsg:6:17
+  |
+6 | model m(x : Vec k, y) : Real = dot(x, x) + y
+  |                 ^ a shape variable
+  |
+  = note: a `model` signature needs a concrete type: shape variables belong in `fn` signatures
+
+error[E0309]: `model` parameter `y` has no type
+ --> not-concrete.hsg:6:20
+  |
+6 | model m(x : Vec k, y) : Real = dot(x, x) + y
+  |                    ^ needs a type
+  |
+  = note: `hsgrad predict` feeds the model, so its signature must be fully concrete
+
+error[E0309]: shape variable `n` in a top-level `let`
+ --> not-concrete.hsg:7:13
+  |
+7 | let h : Vec n = w
+  |             ^ a shape variable
+  |
+  = note: a top-level `let` needs a concrete type: shape variables belong in `fn` signatures
+
+6 errors

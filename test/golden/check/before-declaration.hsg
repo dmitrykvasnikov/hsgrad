@@ -1,0 +1,6 @@
+-- E0203: names must be declared before they are used.
+let y = w * 2
+param w : Real = 1
+
+fn fact(n : Real) : Real = n * fact(n - 1)
+let z = fact(3) + y

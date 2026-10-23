@@ -1,0 +1,11 @@
+-- E0204: values, functions and datasets used as each other.
+input x : Vec 2 = [1, 2]
+param w : Vec 2 ~ uniform(-1, 1)
+
+fn sq(z) = z ^ 2
+
+let a = x(1)
+let b = sq + 1
+let c = tanh * 2
+let d = sum [ p | p <- w ]
+let e = sq(x)[0]

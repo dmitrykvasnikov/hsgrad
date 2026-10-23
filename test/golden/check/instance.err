@@ -1,0 +1,31 @@
+error[E0302]: shape mismatch in matrix product
+ --> instance.hsg:7:12
+  |
+7 | fn sq(z) = z @ z
+  |            ^^^^^ `Vec 2 @ Vec 2`
+  |
+  = note: z : Vec 2 because x : Vec 2 (declared at 4:7)
+  = note: while checking the call at instance.hsg:10:9
+  = hint: for the inner product of two vectors write `dot(u, v)`
+
+error[E0302]: shape mismatch in matrix product
+ --> instance.hsg:7:12
+  |
+7 | fn sq(z) = z @ z
+  |            ^^^^^ `Vec 3 @ Vec 3`
+  |
+  = note: z : Vec 3 because y : Vec 3 (declared at 5:7)
+  = note: while checking the call at instance.hsg:8:15
+  = note: while checking the call at instance.hsg:11:9
+  = hint: for the inner product of two vectors write `dot(u, v)`
+
+error[E0302]: shape mismatch in matrix product
+ --> instance.hsg:7:12
+  |
+7 | fn sq(z) = z @ z
+  |            ^^^^^ `Real @ Real`
+  |
+  = note: while checking the call at instance.hsg:13:9
+  = hint: to scale by a number, use `*`
+
+3 errors

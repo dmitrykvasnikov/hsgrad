@@ -1,0 +1,8 @@
+-- E0313: a dataset is only a comprehension source.
+data moons : { x : Vec 2, y : Real } =
+  csv "data/moons.csv" { x = [x1, x2], y = label }
+
+let a = moons
+let b = moons(1)
+let c = sum(moons)
+let n = mean [ y | (_x, y) <- moons ]

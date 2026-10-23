@@ -1,0 +1,19 @@
+error[E0203]: `w` is used before its declaration
+ --> before-declaration.hsg:2:9
+  |
+2 | let y = w * 2
+  |         ^ used here
+3 | param w : Real = 1
+  |       - declared later, here
+  |
+  = note: declarations must come before use; recursion is not supported
+
+error[E0203]: `fact` is used in its own declaration
+ --> before-declaration.hsg:5:32
+  |
+5 | fn fact(n : Real) : Real = n * fact(n - 1)
+  |                                ^^^^ not declared yet
+  |
+  = note: declarations must come before use; recursion is not supported
+
+2 errors

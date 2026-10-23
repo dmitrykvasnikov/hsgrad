@@ -1,0 +1,4 @@
+-- E0310: `params` without any `param`.
+input x : Real = 1
+let reg = sum [ sum(p ^ 2) | p <- params ]
+let y = reg + x

@@ -1,0 +1,7 @@
+-- E0207: the pattern of a comprehension must match its source.
+data pts : { x : Vec 2, y : Real, z : Real } = rows [ ([0, 1], 2, 3) ]
+param w : Vec 2 ~ uniform(-1, 1)
+
+loss =
+  mean [ dot(w, x) - y | (x, y) <- pts ]
+  + sum [ sum(p) | (p, q) <- params ]

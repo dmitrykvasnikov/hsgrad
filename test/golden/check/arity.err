@@ -1,0 +1,28 @@
+error[E0205]: `layer` takes 3 arguments, but 2 were given
+ --> arity.hsg:7:9
+  |
+5 | fn layer(W : Mat m n, b : Vec m, x : Vec n) : Vec m = W @ x + b
+  |    ----- `layer` is declared here
+6 |
+7 | let h = layer(W, b)
+  |         ^^^^^ called with 2 arguments
+  |
+  = note: signature: layer(W : Mat m n, b : Vec m, x : Vec n) : Vec m
+
+error[E0205]: `dot` takes 2 arguments, but 1 was given
+ --> arity.hsg:8:9
+  |
+8 | let s = dot(h)
+  |         ^^^ called with 1 argument
+  |
+  = note: signature: dot(u : Vec n, v : Vec n) : Real
+
+error[E0205]: `tanh` takes 1 argument, but 2 were given
+ --> arity.hsg:9:9
+  |
+9 | let t = tanh(h, h)
+  |         ^^^^ called with 2 arguments
+  |
+  = note: signature: tanh(e : s) : s
+
+3 errors

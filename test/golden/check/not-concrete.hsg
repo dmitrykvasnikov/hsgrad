@@ -1,0 +1,8 @@
+-- E0309: types that aren't allowed where they are written.
+input x : Vec n
+param w : Vec 0 = 0
+data d : { x : Mat 2 2, y : Real } = rows [ ([[0, 1], [1, 0]], 1) ]
+
+model m(x : Vec k, y) : Real = dot(x, x) + y
+let h : Vec n = w
+let z = x + mean [ y | (_x, y) <- d ]

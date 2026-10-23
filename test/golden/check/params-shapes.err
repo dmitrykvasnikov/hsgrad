@@ -1,0 +1,14 @@
+error[E0310]: the comprehension body has different shapes for different parameters
+ --> params-shapes.hsg:6:17
+  |
+2 | param W : Mat 2 2 ~ uniform(-1, 1)
+  |       - `W : Mat 2 2`
+3 | param b : Vec 2   = 0
+  |       - `b : Vec 2`
+...
+6 | let reg = sum [ p ^ 2 | p <- params ]
+  |                 ^^^^^ `Mat 2 2` for `W`, but `Vec 2` for `b`
+  |
+  = hint: every parameter must give the same shape; `sum(…)` makes any shape a `Real`
+
+1 error

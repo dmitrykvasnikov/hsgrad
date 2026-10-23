@@ -1,0 +1,21 @@
+error[E0314]: comprehensions over datasets can't be nested
+ --> nested.hsg:7:20
+  |
+7 | let a = mean [ x * mean [ y | (_u, y) <- d ] | (x, _v) <- d ]
+  |                    ^^^^^^^^^^^^^^^^^^^^^^^^^              - inside this comprehension over `d`
+  |                    |
+  |                    a comprehension over `d`
+  |
+  = note: a comprehension over a dataset is unrolled once per row; its body can't contain another one
+
+error[E0314]: comprehensions over datasets can't be nested
+ --> nested.hsg:8:16
+  |
+8 | let b = mean [ avg_y(x) | (x, _y) <- d ]
+  |                ^^^^^^^^              - inside this comprehension over `d`
+  |                |
+  |                this call iterates over `d`
+  |
+  = note: a comprehension over a dataset is unrolled once per row; its body can't contain another one
+
+2 errors

@@ -1,0 +1,54 @@
+error[E0308]: the default value doesn't match the declared type
+ --> annotation.hsg:2:19
+  |
+2 | input x : Vec 3 = [1, 2]
+  |           -----   ^^^^^^ this is `Vec 2`
+  |           |
+  |           expected `Vec 3` because of this
+
+error[E0308]: the initial value doesn't match the declared type
+ --> annotation.hsg:3:19
+  |
+3 | param b : Vec 4 = [0, 0]
+  |           -----   ^^^^^^ this is `Vec 2`
+  |           |
+  |           expected `Vec 4` because of this
+  |
+  = hint: a single number fills the whole shape: `= 0`
+
+warning[W0202]: `layer` is never used
+ --> annotation.hsg:6:4
+  |
+6 | fn layer(x : Vec 3) : Real =
+  |    ^^^^^
+
+error[E0308]: body doesn't match the declared result type
+ --> annotation.hsg:7:3
+  |
+6 |   fn layer(x : Vec 3) : Real =
+  |                         ---- expected `Real` because of this
+7 | /   let z = W @ x + b in
+8 | |   tanh(z)
+  | |_________^ this is `Vec 4`
+  |
+  = hint: use `sum(…)`, `dot(…)` or an index `[i]` to get a `Real`
+
+error[E0308]: value doesn't match the `let` annotation
+  --> annotation.hsg:11:19
+   |
+11 |   let u : Vec n = W @ v in
+   |           -----   ^^^^^ this is `Vec 4`
+   |           |
+   |           expected `Vec n`, which is `Vec 3` here, because of this
+   |
+   = note: while checking the call at annotation.hsg:15:9
+
+error[E0308]: value doesn't match the `let` annotation
+  --> annotation.hsg:14:17
+   |
+14 | let h : Vec 3 = W @ x
+   |         -----   ^^^^^ this is `Vec 4`
+   |         |
+   |         expected `Vec 3` because of this
+
+5 errors, 1 warning

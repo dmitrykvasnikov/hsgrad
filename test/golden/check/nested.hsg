@@ -1,0 +1,9 @@
+-- E0314: comprehensions over datasets don't nest, not even through a call.
+data d : { x : Real, y : Real } = rows [ (0, 1), (1, 0) ]
+param w : Real = 1
+
+fn avg_y(s) = s * mean [ y | (_x, y) <- d ]
+
+let a = mean [ x * mean [ y | (_u, y) <- d ] | (x, _v) <- d ]
+let b = mean [ avg_y(x) | (x, _y) <- d ]
+let c = sum [ sum [ p * q | q <- params ] | p <- params ]

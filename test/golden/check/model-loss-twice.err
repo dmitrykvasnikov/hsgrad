@@ -1,0 +1,21 @@
+error[E0206]: more than one `model`
+ --> model-loss-twice.hsg:5:7
+  |
+4 | model m1(x : Real) : Real = w * x
+  |       -- the first `model` is here
+5 | model m2(x : Real) : Real = w + x
+  |       ^^ a second `model`
+  |
+  = note: a file has at most one `model`, the predictor that `hsgrad predict` runs
+
+error[E0206]: more than one `loss`
+ --> model-loss-twice.hsg:8:1
+  |
+7 | loss = m1(1) ^ 2
+  | ---- the first `loss` is here
+8 | loss = m2(1) ^ 2
+  | ^^^^ a second `loss`
+  |
+  = note: a file has at most one `loss`, the objective that `hsgrad train` minimises
+
+2 errors

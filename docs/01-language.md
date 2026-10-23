@@ -237,7 +237,14 @@ At each call `f(a1, …, ak)`:
 3. Check the body's type against the result annotation, if there is one.
 
 Errors in the body are reported at the body location, with a note
-"while checking the call at file:line:col".
+"while checking the call at file:line:col". Each function is checked once
+per distinct list of argument shapes.
+
+A function whose parameters all have concrete types is checked once, at
+its declaration, like a `model`. A generic one is also checked at its
+declaration, with the shapes that involve shape variables unknown: that
+reports names, kinds, arities and every shape error that doesn't depend
+on them, even if the function is never called.
 
 ## 5. Expressions
 
@@ -297,7 +304,8 @@ W0201.
 - A `Seq` can only be the argument of `sum` or `mean` (E0311). Such a call
   may drop its parentheses: `mean [ … ]` is `mean([ … ])`.
 - There is one generator per comprehension, and comprehensions don't nest
-  over datasets.
+  over datasets (E0314), not even through a function call.
+  Comprehensions over `params` may nest.
 
 ## 6. Built-in functions
 
@@ -312,7 +320,7 @@ builtin in terms of core ops (see `03-core-op.md`).
 | `sqrt(e)` | `s → s` | `e ^ 0.5` |
 | `abs(e)` | `s → s` | `relu(e) + relu(-e)` |
 | `max(a, b)`, `min(a, b)` | broadcasting | `a + relu(b - a)`, `a - relu(a - b)` |
-| `sum(e)` | `Vec n → Real`, `Mat r c → Real`, `Seq t → t` | chain of `+` |
+| `sum(e)` | `Real → Real`, `Vec n → Real`, `Mat r c → Real`, `Seq t → t` | chain of `+` |
 | `mean(e)` | same as `sum` | `sum(e) / count` |
 | `dot(u, v)` | `Vec n, Vec n → Real` | `Σ u[i]·v[i]` |
 | `transpose(M)` | `Mat r c → Mat c r` | re-indexing only, no new nodes |
@@ -324,9 +332,11 @@ initialisers, not expressions.
 ## 7. Static semantics, summarised
 
 1. **Names**: there is one namespace. Declarations are visible from the
-   point of declaration onward. Duplicate top-level names are an error.
-   Locals (`fn` parameters, `let … in`, comprehension patterns) shadow
-   globals with a warning.
+   point of declaration onward. Duplicate top-level names are an error,
+   and so is a top-level name that repeats a built-in function. Locals
+   (`let … in`, comprehension patterns) that shadow another name give a
+   warning. Function parameters don't: a signature is its own scope, and
+   `fn neuron(w, b, x)` called as `neuron(w, b, x)` is the normal style.
 2. **Kinds of names**: values, functions and datasets. Using one as another
    is an error (E0204, E0313).
 3. **Shapes**: §4 and §5. All checks are static, and nothing is checked at
@@ -454,11 +464,12 @@ spans and notes. The format is shown in `00-architecture.md` §6.
 | E0306 | Indexing a `Real` |
 | E0307 | `loss` isn't `Real` |
 | E0308 | Body doesn't match the declared result / `let` annotation |
-| E0309 | `model` signature isn't fully concrete |
-| E0310 | Comprehension body has different shapes across iterations |
+| E0309 | Type not allowed where it is written: a shape variable outside a `fn` (in a `model` signature, `input`, `param`, `data` or top-level `let`), an unannotated `model` parameter, a dimension 0, a `Mat` dataset field |
+| E0310 | Comprehension body has different shapes across iterations, or no iteration at all (`params` in a file without `param`) |
 | E0311 | A comprehension used outside `sum` / `mean` |
-| E0312 | Matrix literal rows of different lengths |
+| E0312 | Malformed vector or matrix literal: rows of different lengths, numbers mixed with rows, a matrix inside |
 | E0313 | Dataset used outside a comprehension source |
+| E0314 | Comprehension over a dataset inside another one (directly, or through a function call) |
 
 ### E04xx: data
 

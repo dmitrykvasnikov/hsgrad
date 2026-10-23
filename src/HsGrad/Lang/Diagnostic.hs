@@ -105,6 +105,7 @@ data Code
   | E0311
   | E0312
   | E0313
+  | E0314
   | -- E04xx: data
     E0401
   | E0402
@@ -163,11 +164,12 @@ codeSummary = \case
   E0306 -> "indexing a `Real`"
   E0307 -> "`loss` isn't `Real`"
   E0308 -> "body doesn't match the declared type"
-  E0309 -> "`model` signature isn't fully concrete"
-  E0310 -> "comprehension body has different shapes across iterations"
+  E0309 -> "type not allowed here"
+  E0310 -> "comprehension body has no single shape"
   E0311 -> "comprehension used outside `sum` / `mean`"
-  E0312 -> "matrix literal rows of different lengths"
+  E0312 -> "malformed vector or matrix literal"
   E0313 -> "dataset used outside a comprehension source"
+  E0314 -> "nested comprehensions over datasets"
   E0401 -> "CSV file not found or unreadable"
   E0402 -> "column missing from the CSV header"
   E0403 -> "non-numeric cell"

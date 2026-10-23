@@ -1,0 +1,44 @@
+error[E0304]: argument 1 of `layer` doesn't match its parameter
+ --> argument.hsg:8:15
+  |
+5 | fn layer(W : Mat m n, x : Vec n) : Vec m = W @ x
+  |              ------- the parameter is declared here
+...
+8 | let a = layer(x, W)
+  |               ^ expected `Mat m n`, found `Vec 2`
+
+error[E0304]: argument 2 of `layer` doesn't match its parameter
+ --> argument.hsg:8:18
+  |
+5 | fn layer(W : Mat m n, x : Vec n) : Vec m = W @ x
+  |                           ----- the parameter is declared here
+...
+8 | let a = layer(x, W)
+  |                  ^ expected `Vec n`, found `Mat 2 2`
+
+error[E0304]: argument 1 of `first` doesn't match its parameter
+ --> argument.hsg:9:15
+  |
+6 | fn first(v : Vec 2) : Real = v[0]
+  |              ----- the parameter is declared here
+...
+9 | let b = first([1, 2, 3])
+  |               ^^^^^^^^^ expected `Vec 2`, found `Vec 3`
+
+error[E0304]: argument 2 of `dot` doesn't match its parameter
+  --> argument.hsg:10:16
+   |
+10 | let c = dot(x, W)
+   |                ^ expected `Vec n`, found `Mat 2 2`
+   |
+   = note: signature: dot(u : Vec n, v : Vec n) : Real
+
+error[E0304]: argument 1 of `transpose` doesn't match its parameter
+  --> argument.hsg:11:19
+   |
+11 | let d = transpose(x)
+   |                   ^ expected `Mat r c`, found `Vec 2`
+   |
+   = note: signature: transpose(M : Mat r c) : Mat c r
+
+5 errors

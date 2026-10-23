@@ -1,0 +1,16 @@
+-- E0302: a buggy variant of moons.hsg (W1 has 8 rows instead of 16),
+-- and `@` used where `dot` or `*` was meant.
+param W1 : Mat 8 2   ~ uniform(-1, 1)
+param b1 : Vec 8     = 0
+param W2 : Mat 16 16 ~ uniform(-1, 1)
+param b2 : Vec 16    = 0
+param W3 : Mat 1 16  ~ uniform(-1, 1)
+param b3 : Vec 1     = 0
+
+model mlp(x : Vec 2) : Real =
+  let h1 = relu(W1 @ x + b1) in
+  let h2 = relu(W2 @ h1 + b2) in
+  (W3 @ h2 + b3)[0]
+
+let u = b1 @ b1
+let v = 2 @ W1

@@ -1,0 +1,20 @@
+error[E0207]: the pattern binds 2 names, but `pts` has 3 fields
+ --> pattern.hsg:6:26
+  |
+2 | data pts : { x : Vec 2, y : Real, z : Real } = rows [ ([0, 1], 2, 3) ]
+  |      --- fields `x`, `y`, `z`
+...
+6 |   mean [ dot(w, x) - y | (x, y) <- pts ]
+  |                          ^^^^^^ 2 names
+  |
+  = hint: write `(x, y, z) <- pts`
+
+error[E0207]: `params` gives one parameter at a time, but the pattern binds 2 names
+ --> pattern.hsg:7:20
+  |
+7 |   + sum [ sum(p) | (p, q) <- params ]
+  |                    ^^^^^^ 2 names
+  |
+  = hint: write `p <- params`
+
+2 errors

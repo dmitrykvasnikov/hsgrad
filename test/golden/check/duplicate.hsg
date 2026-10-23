@@ -1,0 +1,9 @@
+-- E0202: duplicate declarations, parameters, fields and pattern variables.
+param w : Vec 2 ~ uniform(-1, 1)
+param w : Real = 1
+
+data d : { x : Vec 2, x : Real } = rows [ ([0, 0], 1) ]
+
+fn f(a, a) = a
+let sum = 1
+let s = mean [ x * y | (x, x) <- d ]

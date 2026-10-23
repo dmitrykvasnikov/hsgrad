@@ -1,0 +1,40 @@
+error[E0204]: `x` is not a function
+ --> kinds.hsg:7:9
+  |
+2 | input x : Vec 2 = [1, 2]
+  |       - declared here
+...
+7 | let a = x(1)
+  |         ^ called, but it is an input
+
+error[E0204]: `sq` is a function, not a value
+ --> kinds.hsg:8:9
+  |
+5 | fn sq(z) = z ^ 2
+  |    -- declared here
+...
+8 | let b = sq + 1
+  |         ^^ used as a value
+  |
+  = hint: call it: `sq(…)`
+
+error[E0204]: `tanh` is a built-in function, not a value
+ --> kinds.hsg:9:9
+  |
+9 | let c = tanh * 2
+  |         ^^^^ used as a value
+  |
+  = hint: call it: `tanh(…)`
+
+error[E0204]: `w` is not a dataset
+  --> kinds.hsg:10:24
+   |
+3  | param w : Vec 2 ~ uniform(-1, 1)
+   |       - declared here
+...
+10 | let d = sum [ p | p <- w ]
+   |                        ^ this is a `param`
+   |
+   = note: a comprehension iterates over a dataset or over `params`
+
+4 errors

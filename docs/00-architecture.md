@@ -199,7 +199,10 @@ can work like C++ templates:
 
 This avoids full Hindley–Milner inference while still giving precise errors.
 Trade-off: shape errors inside a function that is never called aren't
-reported. Name and arity errors are still reported everywhere.
+reported if they depend on its shape variables. Name and arity errors,
+shape errors that don't depend on them, and everything in a function with
+a concrete signature are still reported at the declaration
+(`13-checker.md` §2.3).
 Generic (call-independent) checking of function bodies is a possible later
 upgrade.
 

@@ -1,0 +1,25 @@
+error[E0302]: shape mismatch in matrix product
+  --> matrix-product.hsg:12:17
+   |
+12 |   let h2 = relu(W2 @ h1 + b2) in
+   |                 ^^^^^^^ `Mat 16 16 @ Vec 8`
+   |
+   = note: h1 : Vec 8 because W1 : Mat 8 2 (declared at 3:7)
+
+error[E0302]: shape mismatch in matrix product
+  --> matrix-product.hsg:15:9
+   |
+15 | let u = b1 @ b1
+   |         ^^^^^^^ `Vec 8 @ Vec 8`
+   |
+   = hint: for the inner product of two vectors write `dot(u, v)`
+
+error[E0302]: shape mismatch in matrix product
+  --> matrix-product.hsg:16:9
+   |
+16 | let v = 2 @ W1
+   |         ^^^^^^ `Real @ Mat 8 2`
+   |
+   = hint: to scale by a number, use `*`
+
+3 errors

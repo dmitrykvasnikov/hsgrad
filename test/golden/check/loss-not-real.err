@@ -1,0 +1,11 @@
+error[E0307]: `loss` must be a `Real`
+ --> loss-not-real.hsg:5:8
+  |
+5 | loss = mean [ (W @ x - y) ^ 2 | (x, y) <- d ]
+  | ----   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ this is `Vec 2`
+  | |
+  | the loss is minimised, so it must be one number
+  |
+  = hint: reduce it to a number with `sum(…)` or `mean(…)`
+
+1 error

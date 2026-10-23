@@ -1,0 +1,8 @@
+-- E0206: at most one model and one loss.
+param w : Real = 1
+
+model m1(x : Real) : Real = w * x
+model m2(x : Real) : Real = w + x
+
+loss = m1(1) ^ 2
+loss = m2(1) ^ 2
