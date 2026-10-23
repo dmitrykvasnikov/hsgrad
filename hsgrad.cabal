@@ -35,6 +35,7 @@ library
     , HsGrad.Core.Eval
     , HsGrad.Core.Graph
     , HsGrad.Core.Op
+    , HsGrad.Core.Symbolic
     , HsGrad.Viz.Dot
   build-depends:
     , containers  ^>=0.7
@@ -60,6 +61,7 @@ test-suite spec
     , HsGrad.Core.EvalSpec
     , HsGrad.Core.GraphSpec
     , HsGrad.Core.OpSpec
+    , HsGrad.Core.SymbolicSpec
     , HsGrad.Test.Examples
     , HsGrad.Test.Graphs
     , HsGrad.Viz.DotSpec
