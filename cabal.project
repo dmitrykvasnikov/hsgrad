@@ -1,0 +1,11 @@
+packages: .
+
+-- Build with the toolchain the project is tested with (docs/00-architecture.md §8).
+with-compiler: ghc-9.10.3
+
+-- Build and run the test suite as part of `cabal build all` / `cabal test`.
+tests: True
+
+-- Resolve dependencies against a fixed snapshot of Hackage, so the same
+-- versions are picked on every machine until this line is bumped.
+index-state: 2026-10-20T17:20:44Z

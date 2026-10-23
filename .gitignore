@@ -1,6 +1,14 @@
+# cabal: build output and machine-local settings
 dist-newstyle/
+cabal.project.local*
+.ghc.environment.*
+
+# GHC runtime output (profiles, heap profiles, eventlogs)
+*.prof
+*.hp
+*.eventlog
+
+# Generated Graphviz graphs and pictures
 *.dot
 *.svg
 *.png
-.ghc.environment.*
-cabal.project.local*

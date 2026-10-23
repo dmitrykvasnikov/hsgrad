@@ -1,0 +1,52 @@
+cabal-version:      3.4
+name:               hsgrad
+version:            0.1.0.0
+synopsis:           Scalar reverse-mode autodiff with a small model language
+description:
+  A Haskell re-implementation of Karpathy's micrograd, extended with a
+  declarative .hsg language, symbolic gradients and good error messages.
+  See docs/00-architecture.md.
+category:           Math, Machine Learning
+author:             Dmitry Kvasnikov
+maintainer:         dmitry.kvasnikov@gmail.com
+build-type:         Simple
+tested-with:        GHC == 9.10.3
+extra-doc-files:    docs/*.md
+
+-- Settings shared by every component (library, executable, tests).
+common shared
+  default-language: GHC2021
+  ghc-options:
+    -Wall
+    -Wcompat
+    -Widentities
+    -Wredundant-constraints
+    -Wpartial-fields
+    -Wmissing-export-lists
+    -Wunused-packages
+  build-depends:    base ^>=4.20
+
+library
+  import:           shared
+  hs-source-dirs:   src
+  exposed-modules:  HsGrad
+  other-modules:    Paths_hsgrad
+  autogen-modules:  Paths_hsgrad
+
+executable hsgrad
+  import:           shared
+  hs-source-dirs:   app
+  main-is:          Main.hs
+  build-depends:    hsgrad
+  ghc-options:      -rtsopts
+
+test-suite spec
+  import:           shared
+  type:             exitcode-stdio-1.0
+  hs-source-dirs:   test
+  main-is:          Main.hs
+  other-modules:    HsGradSpec
+  build-depends:
+    , hsgrad
+    , hspec       ^>=2.11
+    , QuickCheck  ^>=2.19
