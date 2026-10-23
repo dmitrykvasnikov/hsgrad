@@ -23,7 +23,7 @@ import Data.Set qualified as Set
 import HsGrad.Core.Eval
 import HsGrad.Core.Graph
 import HsGrad.Core.Op
-import HsGrad.Test.Graphs (Recipe (..), built, builtRecipe)
+import HsGrad.Test.Graphs (built, genEnv, withGraph)
 import Test.Hspec
   ( Expectation
   , Spec
@@ -36,14 +36,12 @@ import Test.Hspec
 import Test.Hspec.QuickCheck (modifyMaxSize, modifyMaxSuccess, prop)
 import Test.QuickCheck
   ( Gen
-  , Property
   , choose
   , classify
   , conjoin
   , counterexample
   , elements
   , forAll
-  , listOf1
   , property
   , (===)
   )
@@ -396,22 +394,7 @@ refValue g env i = case (nodeOp n, nodeArgs n) of
     n = nodeAt g i
     ref = refValue g env
 
--- | Values for the three non-constant leaves of random graphs
--- ('HsGrad.Test.Graphs.genStep'): inputs @x@ and @y@, parameter @w@.
-genEnv :: Gen Env
-genEnv = do
-  x <- genVal
-  y <- genVal
-  w <- genVal
-  pure
-    Env
-      { envInputs = Map.fromList [("x", x), ("y", y)]
-      , envParams = Map.fromList [("w", w)]
-      }
-  where
-    genVal = choose (-3, 3)
-
--- | Like 'genEnv', but each leaf is bound only half of the time. Also binds
+-- | Like 'HsGrad.Test.Graphs.genEnv', but each leaf is bound only half of the time. Also binds
 -- @Input "w"@ sometimes, which must not count as a value for @Param "w"@.
 genPartialEnv :: Gen Env
 genPartialEnv = do
@@ -422,14 +405,6 @@ genPartialEnv = do
   ins <- catMaybes <$> mapM maybeBind ["x", "y", "w"]
   ps <- catMaybes <$> mapM maybeBind ["w"]
   pure (Env (Map.fromList ins) (Map.fromList ps))
-
--- | A random graph, some outputs of it, and a check on them.
-withGraph :: (Graph -> [NodeId] -> Property) -> Recipe -> Property
-withGraph check (Recipe steps) =
-  forAll (listOf1 (choose (0, 1000))) $ \picks ->
-    let (ids, g) = builtRecipe steps
-        outs = [ids !! (p `mod` length ids) | p <- picks]
-     in counterexample (show (nodes g)) (check g outs)
 
 propertySpec :: Spec
 propertySpec = do

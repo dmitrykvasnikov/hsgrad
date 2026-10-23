@@ -6,6 +6,7 @@ module Main
   ( main
   ) where
 
+import HsGrad.Core.BackpropSpec qualified
 import HsGrad.Core.EvalSpec qualified
 import HsGrad.Core.GraphSpec qualified
 import HsGrad.Core.OpSpec qualified
@@ -18,3 +19,4 @@ main = hspec $ do
   describe "HsGrad.Core.Op" HsGrad.Core.OpSpec.spec
   describe "HsGrad.Core.Graph" HsGrad.Core.GraphSpec.spec
   describe "HsGrad.Core.Eval" HsGrad.Core.EvalSpec.spec
+  describe "HsGrad.Core.Backprop" HsGrad.Core.BackpropSpec.spec

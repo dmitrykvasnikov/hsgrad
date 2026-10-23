@@ -31,6 +31,7 @@ library
   hs-source-dirs:   src
   exposed-modules:
     , HsGrad
+    , HsGrad.Core.Backprop
     , HsGrad.Core.Eval
     , HsGrad.Core.Graph
     , HsGrad.Core.Op
@@ -54,6 +55,7 @@ test-suite spec
   hs-source-dirs:   test
   main-is:          Main.hs
   other-modules:
+    , HsGrad.Core.BackpropSpec
     , HsGrad.Core.EvalSpec
     , HsGrad.Core.GraphSpec
     , HsGrad.Core.OpSpec
