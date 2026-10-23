@@ -12,3 +12,5 @@ cabal.project.local*
 *.dot
 *.svg
 *.png
+# ...except the pictures in the docs, which are committed on purpose
+!docs/img/*.svg

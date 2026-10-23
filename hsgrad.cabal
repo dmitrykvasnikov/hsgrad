@@ -35,6 +35,7 @@ library
     , HsGrad.Core.Eval
     , HsGrad.Core.Graph
     , HsGrad.Core.Op
+    , HsGrad.Viz.Dot
   build-depends:
     , containers  ^>=0.7
     , mtl         ^>=2.3
@@ -59,10 +60,15 @@ test-suite spec
     , HsGrad.Core.EvalSpec
     , HsGrad.Core.GraphSpec
     , HsGrad.Core.OpSpec
+    , HsGrad.Test.Examples
     , HsGrad.Test.Graphs
+    , HsGrad.Viz.DotSpec
     , HsGradSpec
   build-depends:
     , containers  ^>=0.7
+    , directory   ^>=1.3
     , hsgrad
     , hspec       ^>=2.11
+    , process     ^>=1.6
     , QuickCheck  ^>=2.19
+    , text        ^>=2.1
