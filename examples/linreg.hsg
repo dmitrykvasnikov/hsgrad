@@ -1,0 +1,29 @@
+-- Linear regression: fit a line y = w·x + b to five points by gradient
+-- descent on the mean squared error.
+--
+-- The points lie near the line y = 2·x + 1. The noise was chosen so that
+-- the least-squares line is exactly w = 2, b = 1 (the noise sums to 0 and
+-- is uncorrelated with x), so we know what training should find.
+--
+--   hsgrad train examples/linreg.hsg --save-params linreg.params
+--   hsgrad eval examples/linreg.hsg --params linreg.params --show w --show b
+--   hsgrad predict examples/linreg.hsg --params linreg.params --set x=10
+
+data points : { x : Real, y : Real } = rows [
+  (-2, -2.9),
+  (-1, -1.2),
+  ( 0,  1.2),
+  ( 1,  2.8),
+  ( 2,  5.1)
+]
+
+-- Start from a flat line through the origin; the loss is convex, so
+-- there is nothing to gain from a random start.
+param w : Real = 0
+param b : Real = 0
+
+model line(x : Real) : Real = w * x + b
+
+-- Mean squared error. The smallest value it can reach is the mean of the
+-- squared noise, (0.1² + 0.2² + 0.2² + 0.2² + 0.1²) / 5 = 0.028.
+loss = mean [ (line(x) - y) ^ 2 | (x, y) <- points ]

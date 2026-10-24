@@ -93,6 +93,7 @@ test-suite spec
     , HsGrad.Data.CsvSpec
     , HsGrad.Data.DatasetSpec
     , HsGrad.DriverSpec
+    , HsGrad.EndToEndSpec
     , HsGrad.Lang.CheckSpec
     , HsGrad.Lang.CompileSpec
     , HsGrad.Lang.DiagnosticSpec
@@ -110,6 +111,9 @@ test-suite spec
     , HsGrad.Train.ParamSpec
     , HsGrad.Viz.DotSpec
     , HsGradSpec
+  -- The end-to-end tests run the program itself: cabal builds it first
+  -- and puts it on the tests' PATH.
+  build-tool-depends: hsgrad:hsgrad
   build-depends:
     , containers  ^>=0.7
     , directory   ^>=1.3

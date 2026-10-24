@@ -750,6 +750,8 @@ are equal as whole graphs.
   Infinity)`). It is a user mistake without a diagnostic code; the
   natural place for it is the parser (E0103, "malformed number literal",
   could cover "out of range"). Left for the driver step to decide.
+  (Decided in step 15: the parser already rejects such literals with
+  E0103, so a `GraphFailure` is an internal error; `16-cli.md` §5.5.)
 
 ---
 

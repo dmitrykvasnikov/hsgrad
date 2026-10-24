@@ -13,9 +13,15 @@ with:
   typo to a `NaN` at training step 50.
 
 It is a learning project: every module has a page in [`docs/`](docs)
-with the theory, the design decisions and a code walkthrough. Start with
-[`docs/00-architecture.md`](docs/00-architecture.md) and the language
-spec [`docs/01-language.md`](docs/01-language.md).
+with the theory, the design decisions and a code walkthrough.
+[`docs/README.md`](docs/README.md) lists them in reading order; start
+with [`docs/00-architecture.md`](docs/00-architecture.md), the language
+spec [`docs/01-language.md`](docs/01-language.md), or the guided tour
+of the examples, [`docs/17-examples.md`](docs/17-examples.md).
+
+All sixteen steps of the roadmap are done. Open points and ideas for
+future work are collected in
+[`docs/00-architecture.md`](docs/00-architecture.md) §10.
 
 ## Building
 
@@ -29,6 +35,16 @@ cabal build all
 
 ```bash
 cabal test
+```
+
+The tests take about 8 seconds. They include end-to-end tests that run
+the built `hsgrad` on every example and check that every command shown
+in [`docs/17-examples.md`](docs/17-examples.md) prints exactly what the
+page shows. micrograd's full moons run (about 10 seconds) is one of
+them, skipped by default; run it too with
+
+```bash
+HSGRAD_SLOW=1 cabal test
 ```
 
 ```bash
@@ -128,3 +144,17 @@ error[E0503]: the value for input `x` has the wrong shape
 
 Every command and option is described in
 [`docs/16-cli.md`](docs/16-cli.md) §3, and in `hsgrad COMMAND --help`.
+
+## The examples
+
+| File | Shows |
+|---|---|
+| [`intro.hsg`](examples/intro.hsg) | micrograd's first example: values, gradients, pictures |
+| [`neuron.hsg`](examples/neuron.hsg) | vectors, a function with shape variables, shared subexpressions |
+| [`calculus.hsg`](examples/calculus.hsg) | symbolic derivatives, second derivatives, what `--simplify` does |
+| [`linreg.hsg`](examples/linreg.hsg) | an inline dataset, mean squared error, training and prediction |
+| [`xor.hsg`](examples/xor.hsg) | a small neural network, parameter files |
+| [`moons.hsg`](examples/moons.hsg) | micrograd's demo: a CSV dataset, a 2-16-16-1 MLP, mini-batches |
+| [`errors.hsg`](examples/errors.hsg) | a broken program and its diagnostics |
+
+[`docs/17-examples.md`](docs/17-examples.md) walks through each of them.

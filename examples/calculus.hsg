@@ -1,0 +1,21 @@
+-- Derivatives to explore with `hsgrad derive`: a polynomial, sigmoid,
+-- and an expression whose derivative only looks complicated.
+input x : Real = 1.5
+
+-- x³: the derivative is 3·x², the second derivative 6·x.
+let cube = x ^ 3
+
+-- `derive` differentiates once. For a second derivative, write the first
+-- one down and differentiate that: `--of dcube` gives 6·x.
+let dcube = 3 * x ^ 2
+
+-- sigmoid is built from exp and a division (01-language.md §6), so its
+-- derivative comes out in those terms. The textbook form is s·(1 - s):
+-- the two have the same value, and `--of ds` gives the second derivative.
+let s  = sigmoid(x)
+let ds = s * (1 - s)
+
+-- (x + 1)² - x² = 2·x + 1, so the derivative is 2. Unsimplified, the
+-- gradient graph shows every step of the chain rule; --simplify gathers
+-- the like terms and leaves the 2.
+let p = (x + 1) * (x + 1) - x * x

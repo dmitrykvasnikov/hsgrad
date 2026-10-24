@@ -151,11 +151,11 @@ hash-consing, but it is used for:
 - **The language** has `Real`, `Vec d` and `Mat r c` with static shapes. The
   checker verifies every shape, and the compiler **unrolls** vector and matrix
   code into scalar nodes.
-- A tensor backend can be added later (see the roadmap) without changing the
+- A tensor backend can be added later (§10) without changing the
   language.
 
-Cost: the unrolled graph is large. A 2-16-16-1 MLP over 100 samples has about
-60k nodes. That's fine for learning, but readable symbolic output and plots
+Cost: the unrolled graph is large. A 2-16-16-1 MLP over 100 samples has
+65,715 nodes. That's fine for learning, but readable symbolic output and plots
 are only realistic for small examples until a tensor backend exists.
 
 ### D6. Two kinds of reverse-mode differentiation
@@ -259,16 +259,19 @@ is `16-cli.md` §3.
 All user-facing errors go through one `Diagnostic` type: a code
 (`E0302`), a severity, a message, a primary span with a label, optional
 secondary spans, and notes. One renderer prints them Rust/Elm style
-(`11-diagnostics.md`):
+(`11-diagnostics.md`). From `examples/errors.hsg` (`17-examples.md` §7):
 
 ```
-error[E0302]: shape mismatch in matrix product
-  --> examples/moons.hsg:14:17
+error[E0303]: shape variable `n` bound inconsistently
+  --> examples/errors.hsg:21:29
    |
-14 |   let h2 = relu(W2 @ h1 + b2) in
-   |                 ^^^^^^^ Mat 16 16 @ Vec 8
-   |
-   = note: h1 : Vec 8 because W1 : Mat 8 2 (declared at 6:7)
+17 | fn affine(W : Mat m n, b : Vec m, v : Vec n) : Vec m = W @ v + b
+   |               -------                 ----- both parameters use `n`
+...
+21 | let h = tahn(affine(W1, b1, x))
+   |                     --      ^ `Vec 2`, so `n = 2` here
+   |                     |
+   |                     `Mat 4 3`, so `n = 3` here
 ```
 
 The checker collects **all** independent errors instead of stopping at the
@@ -287,7 +290,11 @@ first. Error codes are listed in `01-language.md` §10.
 - **Golden tests** for diagnostics: each `test/golden/<stage>/*.hsg` has an
   expected `*.err` output, so error message quality is under test
   (`11-diagnostics.md` §5 explains the harness).
-- **End-to-end**: `moons.hsg` trains to ≥ 95% accuracy with a fixed seed.
+- **End-to-end**: the built `hsgrad` program, run as a process: every
+  example checks cleanly, `moons.hsg` trains to ≥ 95% accuracy with a
+  fixed seed, `xor.hsg` to 100%; and every command shown in
+  `17-examples.md` prints exactly the output shown there
+  (`17-examples.md` §8).
 
 ## 8. Dependencies
 
@@ -302,6 +309,7 @@ learning project.
 | `random` | parameter initialisation, mini-batch sampling |
 | `filepath` | CSV paths relative to the `.hsg` file |
 | `hspec`, `QuickCheck` | tests |
+| `directory`, `process` | tests: temporary files, running `dot` and `hsgrad` |
 
 Hand-written: the Graphviz DOT writer, the CSV reader, the diagnostics
 renderer, and the simplifier.
@@ -311,25 +319,75 @@ Toolchain: GHC 9.10.3 and cabal 3.16 (via ghcup).
 ## 9. Roadmap
 
 Every step = one module (or a tiny pair), its tests, its doc page, one commit,
-and a review before moving on.
+and a review before moving on. All sixteen steps are done; what is left
+is listed in §10.
 
-| Step | Modules | Doc | Milestone |
-|---|---|---|---|
-| 0 | — | 00, 01 | Architecture and language agreed |
-| 1 | cabal skeleton, test suite | 02 | `cabal build && cabal test` pass |
-| 2 | `Core.Op` | 03 | Every op has a forward and a derivative rule |
-| 3 | `Core.Graph` | 04 | Builder with sharing and hash-consing |
-| 4 | `Core.Eval` | 05 | Forward pass on hand-built graphs |
-| 5 | `Core.Backprop` | 06 | Gradients match finite differences |
-| 6 | `Viz.Dot` | 07 | micrograd-style `draw_dot` pictures |
-| 7 | `Core.Symbolic` | 08 | Gradient graphs agree with numeric backprop |
-| 8 | `Core.Simplify`, `Core.Pretty` | 09 | `∂L/∂a = -2·b` shows up simplified |
-| 9 | `Train.*` | 10 | An MLP learns XOR, driven from Haskell code |
-| 10 | `Lang.Span`, `Lang.Diagnostic` | 11 | Snippet renderer, golden tests |
-| 11 | `Lang.Syntax`, `Lang.Parser` | 12 | All example files parse, good parse errors |
-| 12 | `Lang.Shape`, `Lang.Check` | 13 | Name and shape errors with all locations |
-| 13 | `Data.*` | 14 | CSV and inline datasets |
-| 14 | `Lang.Compile` | 15 | `.hsg` → graph equals the hand-built graph |
-| 15 | `Driver`, `app/Main` | 16 | All CLI commands work |
-| 16 | examples, end-to-end tests | 17 | `moons.hsg` trains from the CLI |
-| later | tensor backend, Adam, user-defined ops | — | — |
+| Step | Modules | Doc | Milestone | Status |
+|---|---|---|---|---|
+| 0 | — | 00, 01 | Architecture and language agreed | done |
+| 1 | cabal skeleton, test suite | 02 | `cabal build && cabal test` pass | done |
+| 2 | `Core.Op` | 03 | Every op has a forward and a derivative rule | done |
+| 3 | `Core.Graph` | 04 | Builder with sharing and hash-consing | done |
+| 4 | `Core.Eval` | 05 | Forward pass on hand-built graphs | done |
+| 5 | `Core.Backprop` | 06 | Gradients match finite differences | done |
+| 6 | `Viz.Dot` | 07 | micrograd-style `draw_dot` pictures | done |
+| 7 | `Core.Symbolic` | 08 | Gradient graphs agree with numeric backprop | done |
+| 8 | `Core.Simplify`, `Core.Pretty` | 09 | `∂L/∂a = -2·b` shows up simplified | done |
+| 9 | `Train.*` | 10 | An MLP learns XOR, driven from Haskell code | done |
+| 10 | `Lang.Span`, `Lang.Diagnostic` | 11 | Snippet renderer, golden tests | done |
+| 11 | `Lang.Syntax`, `Lang.Parser` | 12 | All example files parse, good parse errors | done |
+| 12 | `Lang.Shape`, `Lang.Check` | 13 | Name and shape errors with all locations | done |
+| 13 | `Data.*` | 14 | CSV and inline datasets | done |
+| 14 | `Lang.Compile` | 15 | `.hsg` → graph equals the hand-built graph | done |
+| 15 | `Driver`, `app/Main` | 16 | All CLI commands work | done |
+| 16 | examples, end-to-end tests | 17 | `moons.hsg` trains from the CLI | done |
+| later | see §10 | — | — | — |
+
+## 10. Open points and future work
+
+Everything the project leaves for later, in one place. Each item names
+the page where it came up.
+
+**Performance and scale**
+
+- **A tensor backend.** The scalar core unrolls vectors and matrices
+  into scalar nodes (D5): `moons.hsg` is 65,715 nodes per full-batch
+  step, about 0.1 s each. Ops on whole tensors with their own derivative
+  rules would replace the unrolling in `Lang.Compile` and only there
+  (`15-compile.md` §6), without changing the language.
+- **User-defined ops** with their own derivative rules (a `sigmoid`
+  that is one node instead of four).
+
+**Training**
+
+- **Optimisers with state**: momentum, Adam (`10-train.md` §6).
+- **Evaluation on a held-out set**, a second schedule over a second
+  copy of the slots (`10-train.md` §6).
+- **Metrics other than sign accuracy.** `train` reports how often the
+  model's sign matches a `Real` label, which means little for a
+  regression (`17-examples.md` §4, `01-language.md` §11).
+
+**Language and checker**
+
+- **Generic checking of function bodies**, independent of call sites
+  (the D8 upgrade).
+- **`Mat` fields in dataset schemas**, **several generators in one
+  comprehension**, **CSV columns whose names are not identifiers**
+  (`01-language.md` §11).
+- **W0203 per element**: a matrix row that can't affect the loss
+  (`15-compile.md` §4.6).
+
+**Symbolic differentiation**
+
+- **Higher derivatives from the command line.** `backwardNodes` already
+  differentiates a gradient graph again; `derive` has no option to ask
+  for it, so a second derivative needs the first one written down as a
+  `let` (`17-examples.md` §3.1).
+- **A stronger simplifier.** It gathers like terms but never multiplies
+  out or factors (D7), so it doesn't always find the shortest form
+  (`17-examples.md` §3.2).
+
+**Project**
+
+- **A license.** The package has no `license` field yet; choosing one is
+  the owner's decision (`02-project-setup.md` §2.1).

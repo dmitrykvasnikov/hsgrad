@@ -17,6 +17,7 @@ import HsGrad.Core.SymbolicSpec qualified
 import HsGrad.Data.CsvSpec qualified
 import HsGrad.Data.DatasetSpec qualified
 import HsGrad.DriverSpec qualified
+import HsGrad.EndToEndSpec qualified
 import HsGrad.Lang.CheckSpec qualified
 import HsGrad.Lang.CompileSpec qualified
 import HsGrad.Lang.DiagnosticSpec qualified
@@ -56,3 +57,4 @@ main = hspec $ do
   describe "HsGrad.Lang.Compile" HsGrad.Lang.CompileSpec.spec
   describe "HsGrad.Driver" HsGrad.DriverSpec.spec
   describe "HsGrad.Cli" HsGrad.CliSpec.spec
+  describe "end to end" HsGrad.EndToEndSpec.spec

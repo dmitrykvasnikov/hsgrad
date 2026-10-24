@@ -1,0 +1,31 @@
+-- A deliberately broken program, to show hsgrad's diagnostics:
+--
+--   hsgrad check examples/errors.hsg
+--
+-- It parses, so the checker sees all of it and reports every independent
+-- problem in one run, instead of stopping at the first. The test suite
+-- checks that every other example checks cleanly, and that this one gives
+-- exactly the output shown in docs/17-examples.md §7.
+
+input x : Vec 2 = [1, -1]
+
+param W1 : Mat 4 3 ~ uniform(-1, 1)   -- should be Mat 4 2: x has 2 elements
+param b1 : Vec 4   = 0
+param w2 : Vec 4   ~ uniform(-1, 1)
+param scale : Real = 1                -- never used
+
+fn affine(W : Mat m n, b : Vec m, v : Vec n) : Vec m = W @ v + b
+
+-- Two mistakes in one line: W1 has 3 columns but x has 2 elements, so no
+-- `n` fits both; and `tahn` is a typo.
+let h = tahn(affine(W1, b1, x))
+
+-- `h` is broken, so nothing that uses it is checked again: no follow-up
+-- errors here.
+let g = 2 * h
+
+-- `@` of two vectors: `dot` was meant.
+let y = w2 @ b1
+
+-- A `Vec 4` where the annotation says `Real`.
+let z : Real = b1 * 2

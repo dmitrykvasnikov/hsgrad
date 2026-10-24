@@ -26,7 +26,7 @@ let L = d * -2.0
 ```
 
 ```
-hsgrad derive intro.hsg --of L --wrt a,b,c --simplify --format text
+hsgrad derive examples/intro.hsg --of L --wrt a,b,c --simplify --format text
 ∂L/∂a = -2·b  = 6
 ∂L/∂b = -2·a  = -4
 ∂L/∂c = -2    = -2
@@ -45,7 +45,7 @@ fn neuron(w : Vec n, b : Real, x : Vec n) : Real =
 let y = neuron(w, b, x)
 ```
 
-`hsgrad derive neuron.hsg --of y --wrt w --dot neuron-grad.dot` plots the
+`hsgrad derive examples/neuron.hsg --of y --wrt w --dot neuron-grad.dot` plots the
 gradient graph. Each `∂y/∂w[i]` has the shape `(1 − tanh(…)²) · x[i]`, and
 all three share the `1 − tanh(…)²` node.
 
@@ -98,8 +98,12 @@ loss =
 ```
 
 ```
-hsgrad train moons.hsg --steps 100 --lr 1.0 --lr-schedule linear:0.1 --seed 1337
+hsgrad train examples/moons.hsg --steps 100 --lr 1.0 --lr-schedule linear:0.1 --seed 1337
 ```
+
+These four files, and three more (a linear regression, a calculus
+playground, a broken program), are in `examples/`; `17-examples.md`
+walks through all of them with real output.
 
 ---
 
@@ -351,9 +355,12 @@ initialisers, not expressions.
    runtime except non-finite numbers.
 4. **Declarations**: at most one `model` (fully concrete signature) and at
    most one `loss` (type `Real`).
-5. **Unused**: unused declarations give warning W0202. A parameter that
-   can't affect `loss` gives warning W0203 (its gradient is structurally
-   zero).
+5. **Unused**: an input, parameter, dataset, function or local that
+   nothing uses gives warning W0202. A top-level `let` and the `model`
+   never do: they are outputs (`eval`, `derive --of`, `predict`). Names
+   starting with `_` are exempt, so `(_x, y) <- d` says a field is not
+   needed. A parameter that can't affect `loss` gives warning W0203 (its
+   gradient is structurally zero).
 6. The checker reports **all** independent errors. After an error in a
    declaration, names that depend on it are marked "poisoned" and don't
    produce follow-up errors.
@@ -508,6 +515,9 @@ spans and notes. The format is shown in `00-architecture.md` §6.
 | W0203 | Parameter can't affect `loss` |
 
 ## 11. Open points (to revisit when we get there)
+
+The language-level ones; `00-architecture.md` §10 lists all open points
+of the project.
 
 - Generic checking of function bodies independent of call sites (D8 upgrade).
 - `Mat` fields in dataset schemas.

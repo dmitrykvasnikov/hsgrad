@@ -19,8 +19,11 @@ Writing the reporting side first has a practical reason: from step 11 on,
 every test of a failure case is a test of a rendered message, and those
 tests need a renderer to exist and to be trusted.
 
-The milestone is the example from the architecture, reproduced exactly
-from a hand-built diagnostic (`test/golden/diagnostics/matrix-product.err`):
+The milestone is the example the architecture page showed when this step
+was written, reproduced exactly from a hand-built diagnostic
+(`test/golden/diagnostics/matrix-product.err`). The program behind it
+was imagined (`moons.hsg` has no such line); `00-architecture.md` §6 now
+shows a real one, from `examples/errors.hsg`:
 
 ```
 error[E0302]: shape mismatch in matrix product
