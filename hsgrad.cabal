@@ -41,6 +41,7 @@ library
     , HsGrad.Data.Csv
     , HsGrad.Data.Dataset
     , HsGrad.Lang.Check
+    , HsGrad.Lang.Compile
     , HsGrad.Lang.Diagnostic
     , HsGrad.Lang.Parser
     , HsGrad.Lang.Shape
@@ -84,6 +85,7 @@ test-suite spec
     , HsGrad.Data.CsvSpec
     , HsGrad.Data.DatasetSpec
     , HsGrad.Lang.CheckSpec
+    , HsGrad.Lang.CompileSpec
     , HsGrad.Lang.DiagnosticSpec
     , HsGrad.Lang.ParserSpec
     , HsGrad.Lang.ShapeSpec

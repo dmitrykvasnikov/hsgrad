@@ -7,9 +7,14 @@
 -- §4.1). It was introduced for the "HsGrad.Core.Graph" tests and moved here
 -- in step 4, when "HsGrad.Core.Eval" needed random graphs too. Step 5 added
 -- 'SmoothRecipe', a variant using every op, for gradient checks, and moved
--- 'genEnv' and 'withGraph' here from the "HsGrad.Core.Eval" spec.
+-- 'genEnv' and 'withGraph' here from the "HsGrad.Core.Eval" spec. Step 14
+-- moved 'copyWith' and 'sameExpressions' here from the
+-- "HsGrad.Core.Simplify" spec, to compare compiled graphs with hand-built
+-- ones.
 module HsGrad.Test.Graphs
   ( built
+  , copyWith
+  , sameExpressions
   , Recipe (..)
   , SmoothRecipe (..)
   , Step (..)
@@ -23,6 +28,7 @@ module HsGrad.Test.Graphs
 
 import Control.Monad (foldM)
 import Data.Map.Strict qualified as Map
+import Data.Set qualified as Set
 import HsGrad.Core.Eval (Env (..))
 import HsGrad.Core.Graph
 import HsGrad.Core.Op
@@ -46,6 +52,27 @@ built :: Builder a -> (a, Graph)
 built b = case build b of
   Right r -> r
   Left err -> error ("unexpected build error: " <> show err)
+
+-- | Copy expressions into the graph being built, without provenance,
+-- changing each node's arguments with a function first. With @const id@
+-- this is a plain copy. Ascending order is topological (D2).
+copyWith :: (Op -> [NodeId] -> [NodeId]) -> Graph -> [NodeId] -> Builder [NodeId]
+copyWith change from roots = do
+  copies <- foldM copy Map.empty (Set.toAscList (reachable from roots))
+  pure (map (copies Map.!) roots)
+  where
+    copy acc i = do
+      let n = nodeAt from i
+          op = nodeOp n
+      j <- node op (change op (map (acc Map.!) (nodeArgs n)))
+      pure (Map.insert i j acc)
+
+-- | Are the expressions rooted at these nodes of two graphs structurally
+-- equal? Copied into one graph, structurally equal expressions are the
+-- same nodes (hash-consing, D3).
+sameExpressions :: ([NodeId], Graph) -> ([NodeId], Graph) -> Bool
+sameExpressions (r1, g1) (r2, g2) =
+  fst (built ((==) <$> copyWith (const id) g1 r1 <*> copyWith (const id) g2 r2))
 
 -- | A recipe for a random graph: a list of steps, each creating (or
 -- finding) one node. Arguments are indices into the ids produced by the

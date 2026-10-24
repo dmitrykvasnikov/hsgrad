@@ -194,6 +194,7 @@ data Init
   = Uniform !Double !Double     -- ~ uniform(lo, hi)
   | Normal !Double !Double      -- ~ normal(mean, std)
   | Constant !Double            -- = c
+  | Values ![Double]            -- = [1, 2, 3] (added in step 14)
 
 data ParamSpec = ParamSpec
   { specName :: !Text
@@ -212,7 +213,10 @@ training, its shape is concrete.
 
 ```haskell
 elementNames :: ParamSpec -> [Name]
-elementNames (ParamSpec base sh _) = map Name $ case sh of
+elementNames spec = leafNames (specName spec) (specShape spec)
+
+leafNames :: Text -> Shape -> [Name]
+leafNames base sh = map Name $ case sh of
   Scalar -> [base]
   Vector n -> [indexed [i] | i <- [0 .. n - 1]]
   Matrix r c -> [indexed [i, j] | i <- [0 .. r - 1], j <- [0 .. c - 1]]
@@ -233,14 +237,21 @@ initParams :: Seed -> [ParamSpec] -> Params
 initParams seed specs =
   Map.fromList (evalState (concat <$> mapM initSpec specs) (streamGen seed InitStream))
   where
-    initSpec spec = mapM (\n -> (,) n <$> sampleInit (specInit spec)) (elementNames spec)
+    initSpec spec = zip (elementNames spec) <$> sampleInit (specInit spec) (shapeSize (specShape spec))
 
-sampleInit :: Init -> State StdGen Double
-sampleInit i = case i of
-  Uniform lo hi -> state (uniformR (lo, hi))
-  Normal mean std -> (\z -> mean + std * z) <$> standardNormal
-  Constant c -> pure c
+sampleInit :: Init -> Int -> State StdGen [Double]
+sampleInit i n = case i of
+  Uniform lo hi -> replicateM n (state (uniformR (lo, hi)))
+  Normal mean std -> replicateM n ((\z -> mean + std * z) <$> standardNormal)
+  Constant c -> pure (replicate n c)
+  Values vs -> pure (take n vs)
 ```
+
+(Step 14 added `Values`, for `param w : Vec 3 = [1, 2, 3]`, and made
+`sampleInit` produce all of a parameter's elements at once; random
+elements are drawn in the same order as before, so every seed gives the
+same store. It also split `leafNames` out of `elementNames`, so the
+compiler can name input leaves the same way. See `15-compile.md` §4.2.)
 
 The store is a plain map from leaf name to value. That is the shape of
 `envParams` (step 4) and of `paramGrads` (step 5), so binding it is

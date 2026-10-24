@@ -30,6 +30,7 @@ module HsGrad.Train.Param
   , Init (..)
   , ParamSpec (..)
   , elementNames
+  , leafNames
   , shapeSize
 
     -- * The parameter store
@@ -47,6 +48,7 @@ module HsGrad.Train.Param
   , standardNormal
   ) where
 
+import Control.Monad (replicateM)
 import Control.Monad.State.Strict (State, evalState, state)
 import Data.Map.Strict (Map)
 import Data.Map.Strict qualified as Map
@@ -79,6 +81,11 @@ data Init
     Normal !Double !Double
   | -- | @= c@: every element equal to @c@. No randomness is used.
     Constant !Double
+  | -- | @= [1, 2, 3]@: one value per element, in the order of
+    -- 'elementNames' (row-major). No randomness is used. The list is
+    -- expected to have exactly one value per element (the checker makes
+    -- sure of that); extra values are ignored.
+    Values ![Double]
   deriving (Eq, Show)
 
 -- | One @param@ declaration: @param W1 : Mat 16 2 ~ uniform(-1, 1)@ is
@@ -101,7 +108,16 @@ data ParamSpec = ParamSpec
 -- The compiler must create the leaves under exactly these names, or the
 -- forward pass will find parameter leaves without a value.
 elementNames :: ParamSpec -> [Name]
-elementNames (ParamSpec base sh _) = map Name $ case sh of
+elementNames spec = leafNames (specName spec) (specShape spec)
+
+-- | The scalar leaf names of any named value of this shape, row-major:
+-- the convention of 'elementNames', for things that are not parameters.
+-- The compiler (step 14) names input leaves and labels the elements of
+-- @let@-bound vectors with it.
+--
+-- > leafNames "x" (Vector 2) == ["x[0]", "x[1]"]
+leafNames :: Text -> Shape -> [Name]
+leafNames base sh = map Name $ case sh of
   Scalar -> [base]
   Vector n -> [indexed [i] | i <- [0 .. n - 1]]
   Matrix r c -> [indexed [i, j] | i <- [0 .. r - 1], j <- [0 .. c - 1]]
@@ -132,7 +148,8 @@ type Params = Map Name Double
 -- 'InitStream'), spec by spec in list order and element by element in the
 -- order of 'elementNames'. So the same seed and the same specs always give
 -- the same store; list the specs in declaration order to get what the
--- @.hsg@ file means. Specs with a 'Constant' initialiser draw nothing.
+-- @.hsg@ file means. Specs with a 'Constant' or 'Values' initialiser draw
+-- nothing.
 --
 -- Spec names are expected to be distinct (the checker reports duplicate
 -- declarations); if two specs share a leaf name, the later one wins.
@@ -140,7 +157,7 @@ initParams :: Seed -> [ParamSpec] -> Params
 initParams seed specs =
   Map.fromList (evalState (concat <$> mapM initSpec specs) (streamGen seed InitStream))
   where
-    initSpec spec = mapM (\n -> (,) n <$> sampleInit (specInit spec)) (elementNames spec)
+    initSpec spec = zip (elementNames spec) <$> sampleInit (specInit spec) (shapeSize (specShape spec))
 
 -- | The values of one parameter's elements, in the order of
 -- 'elementNames', if the store has all of them. For printing a trained
@@ -178,12 +195,14 @@ streamGen seed s = case s of
 -- ---------------------------------------------------------------------------
 -- Sampling
 
--- | One element's initial value, drawn with the generator in the state.
-sampleInit :: Init -> State StdGen Double
-sampleInit i = case i of
-  Uniform lo hi -> state (uniformR (lo, hi))
-  Normal mean std -> (\z -> mean + std * z) <$> standardNormal
-  Constant c -> pure c
+-- | The initial values of a parameter with this many elements, drawn
+-- with the generator in the state, element by element.
+sampleInit :: Init -> Int -> State StdGen [Double]
+sampleInit i n = case i of
+  Uniform lo hi -> replicateM n (state (uniformR (lo, hi)))
+  Normal mean std -> replicateM n ((\z -> mean + std * z) <$> standardNormal)
+  Constant c -> pure (replicate n c)
+  Values vs -> pure (take n vs)
 
 -- | A sample from the standard normal distribution (mean 0, standard
 -- deviation 1), by the Box–Muller transform.

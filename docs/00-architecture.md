@@ -59,6 +59,13 @@ file).
 - **Train, Viz, Data** are small libraries on top of Core.
 - **Driver** wires everything together; **app/Main** only parses CLI flags.
 
+Two edges are not in the picture. `Data.Dataset` reads the checker's
+dataset declarations (`Lang.Check`), and `Lang.Compile`, the back end of
+Lang, calls the naming functions of `Train.Param` and `Data.Dataset`
+(`elementNames`, `slotNames`) so that leaf names cannot disagree
+(`15-compile.md` §4.1). The front end (`Syntax`, `Parser`, `Check`)
+depends only on Core, and there are no module cycles.
+
 This rule keeps each step testable in isolation: Core is finished and tested
 before a single line of parser code exists.
 

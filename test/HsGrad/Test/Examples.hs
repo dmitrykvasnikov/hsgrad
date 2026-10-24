@@ -113,8 +113,8 @@ data Neuron = Neuron
 -- body's spans; only the result is labelled @y@.
 neuron :: (Neuron, Graph)
 neuron = built $ do
-  xs <- withSpan (sp 1 1 36) (mapM (input . element "x") [0 .. 2])
-  ws <- withSpan (sp 2 1 34) (mapM (param . element "w") [0 .. 2])
+  xs <- withSpan (sp 1 1 35) (mapM (input . element "x") [0 .. 2])
+  ws <- withSpan (sp 2 1 33) (mapM (param . element "w") [0 .. 2])
   b <- withSpan (sp 3 1 20) (param "b")
   (dt, y) <- withSpan (sp 6 3 22) $ do
     (dt, s) <- withSpan (sp 6 8 21) $ do

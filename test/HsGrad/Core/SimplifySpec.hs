@@ -20,7 +20,6 @@ module HsGrad.Core.SimplifySpec
   ( spec
   ) where
 
-import Control.Monad (foldM)
 import Data.Map.Strict qualified as Map
 import Data.Ratio (denominator)
 import Data.Set qualified as Set
@@ -33,7 +32,7 @@ import HsGrad.Core.Pretty
 import HsGrad.Core.Simplify
 import HsGrad.Core.Symbolic
 import HsGrad.Test.Examples
-import HsGrad.Test.Graphs (Recipe (..), SmoothRecipe (..), built, builtRecipe, genEnv, withGraph)
+import HsGrad.Test.Graphs (Recipe (..), SmoothRecipe (..), built, builtRecipe, copyWith, genEnv, sameExpressions, withGraph)
 import Test.Hspec (Spec, describe, it, shouldBe, shouldSatisfy)
 import Test.Hspec.QuickCheck (modifyMaxSuccess, prop)
 import Test.QuickCheck
@@ -111,27 +110,6 @@ valuesOf g env outs = case evaluate g env outs of
 -- | An environment with only inputs.
 inputs :: [(Name, Double)] -> Env
 inputs bs = emptyEnv {envInputs = Map.fromList bs}
-
--- | Copy expressions into the graph being built, without provenance,
--- changing each node's arguments with a function first. With @const id@
--- this is a plain copy. Ascending order is topological (D2).
-copyWith :: (Op -> [NodeId] -> [NodeId]) -> Graph -> [NodeId] -> Builder [NodeId]
-copyWith change from roots = do
-  copies <- foldM copy Map.empty (Set.toAscList (reachable from roots))
-  pure (map (copies Map.!) roots)
-  where
-    copy acc i = do
-      let n = nodeAt from i
-          op = nodeOp n
-      j <- node op (change op (map (acc Map.!) (nodeArgs n)))
-      pure (Map.insert i j acc)
-
--- | Are the expressions rooted at these nodes of two graphs structurally
--- equal? Copied into one graph, structurally equal expressions are the
--- same nodes (hash-consing, D3).
-sameExpressions :: ([NodeId], Graph) -> ([NodeId], Graph) -> Bool
-sameExpressions (r1, g1) (r2, g2) =
-  fst (built ((==) <$> copyWith (const id) g1 r1 <*> copyWith (const id) g2 r2))
 
 -- | Is the value of every node the outputs depend on away from the places
 -- where rounding errors are amplified without bound (division by almost

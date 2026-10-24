@@ -18,7 +18,7 @@ import HsGrad.Train.Loop (sampleBatch)
 import HsGrad.Train.Param
 import Test.Hspec (Spec, describe, it, shouldBe, shouldSatisfy)
 import Test.Hspec.QuickCheck (prop)
-import Test.QuickCheck (Gen, choose, forAll, oneof, (===))
+import Test.QuickCheck (Gen, choose, forAll, oneof, (.&&.), (===))
 
 -- | Shapes small enough to enumerate.
 genShape :: Gen Shape
@@ -72,6 +72,12 @@ spec = do
           c = ParamSpec "c" (Vector 5) (Constant 3)
        in Map.delete "c[0]" (Map.filterWithKey (\k _ -> k `elem` elementNames u) (initParams seed [c, u]))
             === initParams seed [u]
+    prop "explicit values are exact, in element order, and draw nothing" $ \seed ->
+      let u = ParamSpec "u" (Vector 5) (Uniform 0 1)
+          v = ParamSpec "v" (Matrix 2 2) (Values [1, 2, 3, 4])
+          ps = initParams seed [v, u]
+       in map (ps Map.!) (elementNames v) === [1, 2, 3, 4]
+            .&&. Map.filterWithKey (\k _ -> k `elem` elementNames u) ps === initParams seed [u]
     prop "earlier parameters do not depend on later ones" $ \seed ->
       let a = ParamSpec "a" (Vector 3) (Uniform (-1) 1)
           b = ParamSpec "b" (Vector 3) (Normal 0 1)

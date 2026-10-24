@@ -789,7 +789,7 @@ The full suite has 557 tests and runs in about 3 seconds.
 - **Step 15 (`Driver`)**: `checkProgram` after a successful parse; render
   all diagnostics (sorted already), stop on `hasErrors`. `ParamInfo`'s
   `Init` maps onto `Train.Param`: `InitFill` → `Constant`, `InitUniform` /
-  `InitNormal` directly; `InitValues` (an explicit literal) has no
-  `Train.Param.Init` yet. `inputDefault` gives defaults for `eval`;
+  `InitNormal` directly; `InitValues` (an explicit literal) had no
+  `Train.Param.Init` yet (step 14 added `Values`). `inputDefault` gives defaults for `eval`;
   `checkedModel` gives `predict` its inputs; `describeChecked` is a
   ready-made `check --verbose`.
