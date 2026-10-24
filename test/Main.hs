@@ -6,6 +6,7 @@ module Main
   ( main
   ) where
 
+import HsGrad.CliSpec qualified
 import HsGrad.Core.BackpropSpec qualified
 import HsGrad.Core.EvalSpec qualified
 import HsGrad.Core.GraphSpec qualified
@@ -15,6 +16,7 @@ import HsGrad.Core.SimplifySpec qualified
 import HsGrad.Core.SymbolicSpec qualified
 import HsGrad.Data.CsvSpec qualified
 import HsGrad.Data.DatasetSpec qualified
+import HsGrad.DriverSpec qualified
 import HsGrad.Lang.CheckSpec qualified
 import HsGrad.Lang.CompileSpec qualified
 import HsGrad.Lang.DiagnosticSpec qualified
@@ -52,3 +54,5 @@ main = hspec $ do
   describe "HsGrad.Data.Csv" HsGrad.Data.CsvSpec.spec
   describe "HsGrad.Data.Dataset" HsGrad.Data.DatasetSpec.spec
   describe "HsGrad.Lang.Compile" HsGrad.Lang.CompileSpec.spec
+  describe "HsGrad.Driver" HsGrad.DriverSpec.spec
+  describe "HsGrad.Cli" HsGrad.CliSpec.spec

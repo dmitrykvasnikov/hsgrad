@@ -1,0 +1,9 @@
+error[E0201]: `test/golden/run/no-model.hsg` has no `model`
+ --> <command line>:1:8
+  |
+1 | hsgrad predict test/golden/run/no-model.hsg --params test/golden/run/net.params
+  |        ^^^^^^^ needs a `model` declaration
+  |
+  = note: `predict` evaluates the `model`
+
+1 error

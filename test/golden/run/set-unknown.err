@@ -1,0 +1,17 @@
+error[E0201]: `w` is a parameter, not an input
+ --> <command line>:1:51
+  |
+1 | hsgrad eval test/golden/run/set-unknown.hsg --set w=1 --set y=2
+  |                                                   ^ can't be set with `--set`
+  |
+  = hint: parameters come from their initialiser and `--seed`, or from a `--params` file
+
+error[E0201]: there is no input named `y`
+ --> <command line>:1:61
+  |
+1 | hsgrad eval test/golden/run/set-unknown.hsg --set w=1 --set y=2
+  |                                                             ^ unknown input
+  |
+  = note: the inputs are `x`
+
+2 errors

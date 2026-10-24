@@ -1,0 +1,3 @@
+-- args: eval
+input x : Real = -2
+let y = 3 * log(x)

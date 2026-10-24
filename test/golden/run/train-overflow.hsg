@@ -1,0 +1,3 @@
+-- args: train --steps 5 --lr 100
+param w : Real = 1
+loss = -exp(w)

@@ -1,0 +1,4 @@
+-- args: eval --show y
+input x : Vec 2
+input c : Real = 1
+let y = sum(x) * c

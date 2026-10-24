@@ -1,0 +1,9 @@
+error[E0502]: argument `x` of `net` has no value
+ --> test/golden/run/predict-missing-arg.hsg:4:7
+  |
+4 | model net(x : Vec 2) : Real = dot(w, x) + b
+  |       ^^^ needs a value
+  |
+  = hint: give it one on the command line: `--set x=[1, 2]`
+
+1 error

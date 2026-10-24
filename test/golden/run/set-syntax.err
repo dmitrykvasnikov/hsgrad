@@ -1,0 +1,15 @@
+error[E0101]: unexpected `,`
+ --> <command line>:1:55
+  |
+1 | hsgrad eval test/golden/run/set-syntax.hsg --set x=[1,,2] --set c=2x
+  |                                                       ^ expected a literal
+
+error[E0103]: malformed number literal `2x`
+ --> <command line>:1:67
+  |
+1 | hsgrad eval test/golden/run/set-syntax.hsg --set x=[1,,2] --set c=2x
+  |                                                                   ^^ `x` can't follow a number
+  |
+  = hint: to multiply, write `2 * x`
+
+2 errors

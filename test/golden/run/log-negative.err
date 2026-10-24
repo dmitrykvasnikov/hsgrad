@@ -1,0 +1,9 @@
+error[E0501]: non-finite value: `log` of a negative number
+ --> test/golden/run/log-negative.hsg:3:13
+  |
+3 | let y = 3 * log(x)
+  |             ^^^^^^ `log(-2)` is NaN
+  |
+  = hint: `log` is defined only for positive numbers
+
+1 error

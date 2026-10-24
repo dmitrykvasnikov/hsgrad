@@ -1,0 +1,4 @@
+-- args: eval --show x[5] --show sq --show Lx --show loss --set x=[1]
+input x : Vec 3 = [1, 2, 3]
+fn sq(z) = z * z
+let L = sum(sq(x))

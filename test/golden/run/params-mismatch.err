@@ -1,0 +1,36 @@
+error[E0505]: parameter `w` has the wrong shape
+ --> test/golden/run/mismatch.params:2:7
+  |
+2 | param w : Vec 3 = [1, 2, 3]
+  |       ^ a `Vec 3` here
+  |
+ ::: test/golden/run/params-mismatch.hsg:2:7
+  |
+2 | param w : Vec 2 = 0
+  |       - a `Vec 2` in the program
+
+error[E0505]: the program has no parameter `scal`
+ --> test/golden/run/mismatch.params:3:7
+  |
+3 | param scal : Real = 2
+  |       ^^^^ unknown parameter
+  |
+  = hint: did you mean `scale`?
+
+error[E0505]: parameter `b` is missing from `test/golden/run/mismatch.params`
+ --> test/golden/run/params-mismatch.hsg:3:7
+  |
+3 | param b : Real = 0
+  |       ^ has no value in the parameter file
+  |
+  = hint: a parameter file needs a value for every parameter of the program
+
+error[E0505]: parameter `scale` is missing from `test/golden/run/mismatch.params`
+ --> test/golden/run/params-mismatch.hsg:4:7
+  |
+4 | param scale : Real = 1
+  |       ^^^^^ has no value in the parameter file
+  |
+  = hint: a parameter file needs a value for every parameter of the program
+
+4 errors

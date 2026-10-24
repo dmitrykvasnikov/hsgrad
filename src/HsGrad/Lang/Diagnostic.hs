@@ -117,6 +117,7 @@ data Code
   | E0502
   | E0503
   | E0504
+  | E0505
   | -- W02xx: warnings
     W0201
   | W0202
@@ -170,7 +171,7 @@ codeSummary = \case
   E0312 -> "malformed vector or matrix literal"
   E0313 -> "dataset used outside a comprehension source"
   E0314 -> "nested comprehensions over datasets"
-  E0401 -> "CSV file not found or unreadable"
+  E0401 -> "file not found or unreadable"
   E0402 -> "column missing from the CSV header, or ambiguous"
   E0403 -> "non-numeric cell or malformed CSV line"
   E0404 -> "data source doesn't match the schema"
@@ -179,6 +180,7 @@ codeSummary = \case
   E0502 -> "input has no value"
   E0503 -> "`--set` value has the wrong shape"
   E0504 -> "non-finite gradient"
+  E0505 -> "`--params` file doesn't match the program"
   W0201 -> "local name shadows an outer one"
   W0202 -> "unused declaration"
   W0203 -> "parameter can't affect `loss`"

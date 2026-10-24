@@ -1,0 +1,4 @@
+-- args: eval --set w=1 --set y=2
+input x : Real = 1
+param w : Real = 0
+let y = x * w

@@ -1,0 +1,7 @@
+error[E0401]: cannot read `test/golden/run/does-not-exist.params`
+ --> <command line>:1:65
+  |
+1 | hsgrad predict test/golden/run/missing-params-file.hsg --params test/golden/run/does-not-exist.params
+  |                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ no such file
+
+1 error

@@ -27,9 +27,9 @@ let L = d * -2.0
 
 ```
 hsgrad derive intro.hsg --of L --wrt a,b,c --simplify --format text
-∂L/∂a = -2·b      = 6
-∂L/∂b = -2·a      = -4
-∂L/∂c = -2        = -2
+∂L/∂a = -2·b  = 6
+∂L/∂b = -2·a  = -4
+∂L/∂c = -2    = -2
 ```
 
 ### 1.2 `neuron.hsg`: vectors, a function with shape variables
@@ -483,7 +483,7 @@ spans and notes. The format is shown in `00-architecture.md` §6.
 
 | Code | Meaning |
 |---|---|
-| E0401 | CSV file not found or unreadable |
+| E0401 | File not found or unreadable: a CSV file, or a file named on the command line (the `.hsg` file, `--params`) |
 | E0402 | Column named in the mapping is missing from the header, or appears in it more than once |
 | E0403 | Non-numeric cell, or a malformed CSV line (wrong number of cells, bad quoting, a blank line before the end), at file:row:column |
 | E0404 | Inline row or CSV column mapping doesn't match the schema |
@@ -497,6 +497,7 @@ spans and notes. The format is shown in `00-architecture.md` §6.
 | E0502 | Input has no value (no default, no `--set`) |
 | E0503 | `--set` value has the wrong shape |
 | E0504 | Non-finite gradient (NaN/∞) during backprop, reported at the node that passes it on |
+| E0505 | `--params` file doesn't match the program: a parameter missing, unknown or of another shape, a random initialiser instead of values, or a declaration other than `param` |
 
 ### Warnings
 

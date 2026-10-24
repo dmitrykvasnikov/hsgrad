@@ -1,0 +1,4 @@
+-- args: eval --set x=[1,,2] --set c=2x
+input x : Vec 2
+input c : Real = 1
+let y = sum(x) + c

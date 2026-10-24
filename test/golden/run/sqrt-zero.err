@@ -1,0 +1,9 @@
+error[E0504]: non-finite gradient: infinite slope at 0
+ --> test/golden/run/sqrt-zero.hsg:3:9
+  |
+3 | let y = sqrt(x) + x
+  |         ^^^^^^^ `0 ^ -0.5` is ∞
+  |
+  = hint: the slope of `sqrt(x)` (`x ^ 0.5`), and of any power below 1, is infinite at x = 0
+
+1 error

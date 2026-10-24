@@ -31,6 +31,7 @@ library
   hs-source-dirs:   src
   exposed-modules:
     , HsGrad
+    , HsGrad.Cli
     , HsGrad.Core.Backprop
     , HsGrad.Core.Eval
     , HsGrad.Core.Graph
@@ -40,6 +41,8 @@ library
     , HsGrad.Core.Symbolic
     , HsGrad.Data.Csv
     , HsGrad.Data.Dataset
+    , HsGrad.Driver
+    , HsGrad.Driver.ParamsFile
     , HsGrad.Lang.Check
     , HsGrad.Lang.Compile
     , HsGrad.Lang.Diagnostic
@@ -56,6 +59,7 @@ library
     , filepath           ^>=1.5
     , megaparsec         ^>=9.8
     , mtl                ^>=2.3
+    , optparse-applicative ^>=0.19
     , parser-combinators ^>=1.3
     , random             ^>=1.3
     , text               ^>=2.1
@@ -66,7 +70,10 @@ executable hsgrad
   import:           shared
   hs-source-dirs:   app
   main-is:          Main.hs
-  build-depends:    hsgrad
+  build-depends:
+    , hsgrad
+    , optparse-applicative ^>=0.19
+    , text                 ^>=2.1
   ghc-options:      -rtsopts
 
 test-suite spec
@@ -75,6 +82,7 @@ test-suite spec
   hs-source-dirs:   test
   main-is:          Main.hs
   other-modules:
+    , HsGrad.CliSpec
     , HsGrad.Core.BackpropSpec
     , HsGrad.Core.EvalSpec
     , HsGrad.Core.GraphSpec
@@ -84,6 +92,7 @@ test-suite spec
     , HsGrad.Core.SymbolicSpec
     , HsGrad.Data.CsvSpec
     , HsGrad.Data.DatasetSpec
+    , HsGrad.DriverSpec
     , HsGrad.Lang.CheckSpec
     , HsGrad.Lang.CompileSpec
     , HsGrad.Lang.DiagnosticSpec
@@ -94,6 +103,7 @@ test-suite spec
     , HsGrad.Test.Examples
     , HsGrad.Test.Golden
     , HsGrad.Test.Graphs
+    , HsGrad.Test.Graphviz
     , HsGrad.Test.Syntax
     , HsGrad.Train.LoopSpec
     , HsGrad.Train.OptimSpec
@@ -107,6 +117,7 @@ test-suite spec
     , hsgrad
     , hspec       ^>=2.11
     , mtl         ^>=2.3
+    , optparse-applicative ^>=0.19
     , process     ^>=1.6
     , QuickCheck  ^>=2.19
     , text        ^>=2.1

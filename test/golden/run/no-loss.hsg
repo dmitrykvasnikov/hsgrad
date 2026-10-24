@@ -1,0 +1,3 @@
+-- args: train
+input a : Real = 2
+let L = a * a

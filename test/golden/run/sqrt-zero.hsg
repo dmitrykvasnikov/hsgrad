@@ -1,0 +1,3 @@
+-- args: derive --of y --wrt x
+input x : Real = 0
+let y = sqrt(x) + x

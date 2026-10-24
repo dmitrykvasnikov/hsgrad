@@ -1,0 +1,18 @@
+error[E0201]: no value named `bb` in `test/golden/run/unknown-wrt.hsg`
+ --> <command line>:1:62
+  |
+1 | hsgrad derive test/golden/run/unknown-wrt.hsg --of L --wrt a,bb,c
+  |                                                              ^^ unknown name
+  |
+  = note: values are inputs, parameters, top-level `let`s and `loss`
+  = hint: did you mean `b`?
+
+error[E0201]: no value named `c` in `test/golden/run/unknown-wrt.hsg`
+ --> <command line>:1:65
+  |
+1 | hsgrad derive test/golden/run/unknown-wrt.hsg --of L --wrt a,bb,c
+  |                                                                 ^ unknown name
+  |
+  = note: values are inputs, parameters, top-level `let`s and `loss`
+
+2 errors

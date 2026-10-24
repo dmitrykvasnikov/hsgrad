@@ -1,0 +1,5 @@
+-- args: predict --params test/golden/run/mismatch.params --set x=[1,2]
+param w : Vec 2 = 0
+param b : Real = 0
+param scale : Real = 1
+model net(x : Vec 2) : Real = scale * dot(w, x) + b

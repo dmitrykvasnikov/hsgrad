@@ -23,24 +23,18 @@ import Data.Char (isDigit)
 import Data.Set qualified as Set
 import Data.Text (Text)
 import Data.Text qualified as Text
-import GHC.IO.Encoding (setLocaleEncoding, utf8)
 import HsGrad.Core.Backprop
 import HsGrad.Core.Eval
 import HsGrad.Core.Graph
 import HsGrad.Core.Op
 import HsGrad.Test.Examples
 import HsGrad.Test.Graphs (Recipe (..), built, builtRecipe, genEnv, withGraph)
+import HsGrad.Test.Graphviz (toSvg, withDot)
 import HsGrad.Viz.Dot
-import System.Directory (findExecutable)
-import System.Exit (ExitCode (..))
-import System.Process (readProcessWithExitCode)
 import Test.Hspec
-  ( Expectation
-  , Spec
+  ( Spec
   , describe
-  , expectationFailure
   , it
-  , pendingWith
   , shouldBe
   , shouldContain
   , shouldNotContain
@@ -578,28 +572,7 @@ propertySpec = modifyMaxSize (const 20) $ do
 -- ---------------------------------------------------------------------------
 -- Graphviz
 
--- | Run a test with the path of Graphviz's @dot@, or mark it pending if
--- Graphviz is not installed: the test suite must not require it.
-withDot :: (FilePath -> Expectation) -> Expectation
-withDot k = do
-  found <- findExecutable "dot"
-  case found of
-    Nothing -> pendingWith "Graphviz (dot) is not on PATH"
-    Just exe -> do
-      -- The DOT text is UTF-8 (∂L/∂a), whatever the system locale says.
-      setLocaleEncoding utf8
-      k exe
-
--- | Render DOT text to SVG with Graphviz. Fails the test if @dot@ exits
--- with an error or prints anything (a warning) on stderr.
-toSvg :: FilePath -> Text -> IO String
-toSvg exe dot = do
-  (code, out, err) <- readProcessWithExitCode exe ["-Tsvg"] (Text.unpack dot)
-  case (code, err) of
-    (ExitSuccess, "") -> pure out
-    _ ->
-      expectationFailure ("dot failed: " <> show code <> "\n" <> err <> "\n" <> Text.unpack dot)
-        >> pure out
+-- 'withDot' and 'toSvg' are in "HsGrad.Test.Graphviz".
 
 graphvizSpec :: Spec
 graphvizSpec = do

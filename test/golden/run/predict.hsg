@@ -1,0 +1,4 @@
+-- args: predict --params test/golden/run/net.params --set x=[2,1]
+param w : Vec 2 = 0
+param b : Real = 0
+model net(x : Vec 2) : Real = dot(w, x) + b

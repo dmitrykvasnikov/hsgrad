@@ -1,0 +1,14 @@
+train test/golden/run/train-overflow.hsg: 5 steps, lr 100 (constant), seed 1337
+step 0  loss -2.71828
+step 1  loss -3.0745e118
+error[E0501]: non-finite value: `exp` overflows
+ --> test/golden/run/train-overflow.hsg:3:9
+  |
+3 | loss = -exp(w)
+  |         ^^^^^^ `exp(3.0744987277590327e120)` is ∞
+  |
+  = note: in training step 2
+  = hint: `exp(x)` is too large for a Double when x is above about 709.78
+  = hint: training may have diverged: try a smaller `--lr`
+
+1 error

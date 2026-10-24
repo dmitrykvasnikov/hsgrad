@@ -1,0 +1,45 @@
+error[E0503]: the value for input `x` has the wrong shape
+ --> <command line>:1:47
+  |
+1 | hsgrad eval test/golden/run/names.hsg --set x=[1] --show x[5] --show sq --show Lx --show loss
+  |                                               ^^^ a `Vec 1`
+  |
+ ::: test/golden/run/names.hsg:2:7
+  |
+2 | input x : Vec 3 = [1, 2, 3]
+  |       - declared as a `Vec 3` here
+  |
+  = hint: write a `Vec 3`, like `x=[1, 2, 3]`
+
+error[E0305]: `x` has no element `x[5]`
+ --> <command line>:1:58
+  |
+1 | hsgrad eval test/golden/run/names.hsg --set x=[1] --show x[5] --show sq --show Lx --show loss
+  |                                                          ^^^^ `x` is a `Vec 3`
+  |
+  = note: its elements are `x[0]` to `x[2]`
+
+error[E0204]: `sq` is a function, not a value
+ --> <command line>:1:70
+  |
+1 | hsgrad eval test/golden/run/names.hsg --set x=[1] --show x[5] --show sq --show Lx --show loss
+  |                                                                      ^^ needs a value
+  |
+  = note: values are inputs, parameters, top-level `let`s and `loss`
+
+error[E0201]: no value named `Lx` in `test/golden/run/names.hsg`
+ --> <command line>:1:80
+  |
+1 | hsgrad eval test/golden/run/names.hsg --set x=[1] --show x[5] --show sq --show Lx --show loss
+  |                                                                                ^^ unknown name
+  |
+  = note: values are inputs, parameters, top-level `let`s and `loss`
+  = hint: did you mean `L`?
+
+error[E0201]: `test/golden/run/names.hsg` has no `loss`
+ --> <command line>:1:90
+  |
+1 | hsgrad eval test/golden/run/names.hsg --set x=[1] --show x[5] --show sq --show Lx --show loss
+  |                                                                                          ^^^^ no `loss` declaration
+
+5 errors

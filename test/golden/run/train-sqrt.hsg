@@ -1,0 +1,3 @@
+-- args: train --steps 3
+param w : Real = 0
+loss = sqrt(w * w)

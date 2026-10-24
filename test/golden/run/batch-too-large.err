@@ -1,0 +1,9 @@
+error[E0405]: `--batch 5` is larger than dataset `pts`
+ --> test/golden/run/batch-too-large.hsg:2:6
+  |
+2 | data pts : { x : Real, y : Real } = rows [ (0, 1), (1, -1) ]
+  |      ^^^ `pts` has 2 rows
+  |
+  = hint: use `--batch 2` or less, or leave `--batch` out to use every row in every step
+
+1 error

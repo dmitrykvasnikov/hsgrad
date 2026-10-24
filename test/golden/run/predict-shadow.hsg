@@ -1,0 +1,8 @@
+-- args: predict --params test/golden/run/net.params --set x=[2,1]
+-- The model's argument x shadows the input x, which `shift` still sees:
+-- --set x sets the argument.
+input x : Real = 10
+param w : Vec 2 = 0
+param b : Real = 0
+fn shift(v) = v + x
+model net(x : Vec 2) : Real = dot(w, shift(x)) + b

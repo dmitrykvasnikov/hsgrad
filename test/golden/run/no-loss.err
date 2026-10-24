@@ -1,0 +1,9 @@
+error[E0201]: `test/golden/run/no-loss.hsg` has no `loss`
+ --> <command line>:1:8
+  |
+1 | hsgrad train test/golden/run/no-loss.hsg
+  |        ^^^^^ needs a `loss` declaration
+  |
+  = note: `train` minimises the `loss`
+
+1 error

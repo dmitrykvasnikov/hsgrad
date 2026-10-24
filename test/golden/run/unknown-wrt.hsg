@@ -1,0 +1,4 @@
+-- args: derive --of L --wrt a,bb,c
+input a : Real = 2
+input b : Real = -3
+let L = a * b

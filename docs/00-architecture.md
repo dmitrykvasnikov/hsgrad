@@ -57,7 +57,8 @@ file).
   library for building, evaluating and differentiating scalar graphs.
 - **Lang** turns text into Core graphs. It depends on Core, never the reverse.
 - **Train, Viz, Data** are small libraries on top of Core.
-- **Driver** wires everything together; **app/Main** only parses CLI flags.
+- **Driver** wires everything together; **Cli** describes the command
+  line, and **app/Main** only does the IO (`16-cli.md`).
 
 Two edges are not in the picture. `Data.Dataset` reads the checker's
 dataset declarations (`Lang.Check`), and `Lang.Compile`, the back end of
@@ -93,8 +94,10 @@ before a single line of parser code exists.
 | `HsGrad.Data.Csv` | Minimal numeric CSV reader | 14 |
 | `HsGrad.Data.Dataset` | Datasets (from CSV or inline rows) checked against their schema | 14 |
 | `HsGrad.Lang.Compile` | Checked AST → `Builder` actions (inlining, unrolling vectors into scalars) | 15 |
-| `HsGrad.Driver` | Pipeline: file → parse → check → compile → run a command | 16 |
-| `app/Main.hs` | `optparse-applicative` CLI | 16 |
+| `HsGrad.Driver` | Pipeline: file → parse → check → compile → run a command; runtime diagnostics | 16 |
+| `HsGrad.Driver.ParamsFile` | Parameter files for `--save-params` / `--params` | 16 |
+| `HsGrad.Cli` | The `optparse-applicative` description of the command line | 16 |
+| `app/Main.hs` | The IO around the driver: print, write files, exit | 16 |
 
 ## 4. Key design decisions
 
@@ -233,7 +236,7 @@ The `.hsg` file contains no training settings and no commands. Learning rate,
 schedule, steps, seed, batch size, output paths and which derivatives to
 compute are CLI flags.
 
-## 5. Command-line interface (planned)
+## 5. Command-line interface
 
 ```
 hsgrad check  FILE                               parse + check, report all errors
@@ -246,7 +249,10 @@ hsgrad predict FILE --params PARAMS [--set NAME=VALUE ...]
 ```
 
 `train` requires a `loss` declaration, and `predict` requires a `model`
-declaration (see `01-language.md`).
+declaration (see `01-language.md`). `eval`, `derive` and `plot` also take
+`--set`, `--params` and `--seed`; every command takes `--color
+auto|always|never`. The full reference, with the parameter file format,
+is `16-cli.md` §3.
 
 ## 6. Error handling
 

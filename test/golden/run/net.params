@@ -1,0 +1,3 @@
+-- Parameters for the predict-*.hsg golden files.
+param w : Vec 2 = [0.5, -1]
+param b : Real  = 0.25

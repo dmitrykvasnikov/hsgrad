@@ -1,0 +1,3 @@
+-- args: predict --params test/golden/run/net.params
+param w : Real = 0
+loss = w * w

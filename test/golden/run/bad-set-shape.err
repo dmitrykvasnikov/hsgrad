@@ -1,0 +1,27 @@
+error[E0503]: the value for input `x` has the wrong shape
+ --> <command line>:1:55
+  |
+1 | hsgrad eval test/golden/run/bad-set-shape.hsg --set x=[1,2,3] --set c=[[1,2],[3,4]]
+  |                                                       ^^^^^^^ a `Vec 3`
+  |
+ ::: test/golden/run/bad-set-shape.hsg:2:7
+  |
+2 | input x : Vec 2
+  |       - declared as a `Vec 2` here
+  |
+  = hint: write a `Vec 2`, like `x=[1, 2]`
+
+error[E0503]: the value for input `c` has the wrong shape
+ --> <command line>:1:71
+  |
+1 | hsgrad eval test/golden/run/bad-set-shape.hsg --set x=[1,2,3] --set c=[[1,2],[3,4]]
+  |                                                                       ^^^^^^^^^^^^^ a `Mat 2 2`
+  |
+ ::: test/golden/run/bad-set-shape.hsg:3:7
+  |
+3 | input c : Real = 1
+  |       - declared as a `Real` here
+  |
+  = hint: write a `Real`, like `c=1.5`
+
+2 errors

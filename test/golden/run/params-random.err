@@ -1,0 +1,18 @@
+error[E0505]: a parameter file holds only `param` declarations
+ --> test/golden/run/random.params:1:1
+  |
+1 | input x : Vec 2 = [1, 2]
+  | ^^^^^^^^^^^^^^^^^^^^^^^^ not a `param`
+  |
+  = hint: parameter files are written by `hsgrad train --save-params`
+
+error[E0505]: parameter `w` has no values
+ --> test/golden/run/random.params:2:19
+  |
+2 | param w : Vec 2 ~ uniform(-1, 1)
+  |                   ^^^^^^^^^^^^^^ a random initialiser
+  |
+  = note: a parameter file holds values, so that predictions don't depend on a seed
+  = hint: write the values, for example `= [1, 2]`, or `= 0` to fill the whole shape
+
+2 errors

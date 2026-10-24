@@ -1,0 +1,12 @@
+train test/golden/run/train-sqrt.hsg: 3 steps, lr 0.1 (constant), seed 1337
+error[E0504]: non-finite gradient: infinite slope at 0
+ --> test/golden/run/train-sqrt.hsg:3:8
+  |
+3 | loss = sqrt(w * w)
+  |        ^^^^^^^^^^^ the gradient passed back through `0 ^ 0.5` is not finite
+  |
+  = note: the gradient arriving there is 1, the local derivatives are ∞
+  = note: in training step 0
+  = hint: the slope of `sqrt(x)` (`x ^ 0.5`), and of any power below 1, is infinite at x = 0
+
+1 error

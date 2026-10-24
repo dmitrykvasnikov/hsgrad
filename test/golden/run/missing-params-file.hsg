@@ -1,0 +1,3 @@
+-- args: predict --params test/golden/run/does-not-exist.params
+param w : Vec 2 = 0
+model net(x : Vec 2) : Real = dot(w, x)

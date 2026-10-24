@@ -1,0 +1,9 @@
+error[E0502]: input `x` has no value
+ --> test/golden/run/missing-input.hsg:2:7
+  |
+2 | input x : Vec 2
+  |       ^ needs a value
+  |
+  = hint: give it one on the command line: `--set x=[1, 2]`
+
+1 error
