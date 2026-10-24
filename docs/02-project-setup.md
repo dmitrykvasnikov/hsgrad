@@ -69,8 +69,8 @@ extra-doc-files:    docs/*.md
   each new page automatically.
 
 `synopsis`, `description`, `category`, `author` and `maintainer` are
-metadata only. There is no `license` field yet: the project has no license
-file, and choosing one is a separate decision.
+metadata only. `license: MIT` names the license as an SPDX identifier, and
+`license-file: LICENSE` points at its full text in the repository root.
 
 ### 2.2 The `common` stanza
 

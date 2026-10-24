@@ -7,7 +7,9 @@ description:
   declarative .hsg language, symbolic gradients and good error messages.
   See docs/00-architecture.md.
 category:           Math, Machine Learning
-author:             Dmitry Kvasnikov
+license:            MIT
+license-file:       LICENSE
+author:            Dmitry Kvasnikov
 maintainer:         dmitry.kvasnikov@gmail.com
 build-type:         Simple
 tested-with:        GHC == 9.10.3

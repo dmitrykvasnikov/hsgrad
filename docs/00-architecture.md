@@ -386,8 +386,3 @@ the page where it came up.
 - **A stronger simplifier.** It gathers like terms but never multiplies
   out or factors (D7), so it doesn't always find the shortest form
   (`17-examples.md` §3.2).
-
-**Project**
-
-- **A license.** The package has no `license` field yet; choosing one is
-  the owner's decision (`02-project-setup.md` §2.1).
